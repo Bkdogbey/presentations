@@ -1,15 +1,15 @@
 ---
-# SHASTA tutorial — iHuman Lab presentation template, extended for a hands-on session.
+# SHaSTA tutorial — iHuman Lab presentation template, extended for a hands-on session.
 # See README.md for how this deck is organized and RUNSHEET.md for timing.
 #
 # Render with:  quarto render shasta-tutorial.qmd
 #               quarto preview shasta-tutorial.qmd   (live-reload while editing)
-title: "SHASTA Tutorial<br>Simulating [Human-Swarm Teaming]{.accent} on Real City Maps"
-subtitle: "A hands-on introduction to the SHASTA simulator"
+title: "SHaSTA<span class='title-fullname'>Simulator for Human And Swarm<br>[Team Applications]{.accent}</span>"
+subtitle: "<span class='title-tagline'>A hands-on tutorial: simulating human–swarm teaming on real city maps</span>"
 author: "Hemanth Manjunatha"
-institute: "Oklahoma State University"
+institute: "Oklahoma State University · University at Buffalo"
 date: "2026-09-29"
-description: "A hands-on introduction to SHASTA: install it, run a human-swarm mission in the GUI, and write your own experiment."
+description: "A hands-on introduction to SHaSTA: install it, run a human-swarm mission in the GUI, and write your own experiment."
 image: assets/world-overview.png
 event_type: "Tutorial"
 format:
@@ -19,7 +19,7 @@ format:
     transition: fade
     background-transition: fade
     logo: assets/logo.png
-    footer: "iHuman Lab · Oklahoma State University"
+    footer: "SHaSTA Tutorial · OSU · UB"
     width: 1280
     height: 720
     margin: 0.1
@@ -32,22 +32,72 @@ title-slide-attributes:
   data-background-color: "#252525"
 ---
 
+## Meet the [Team]{.accent}
+
+::: {.hook}
+Oklahoma State University × University at Buffalo
+:::
+
+::: {.team .cols-4}
+
+::: {.member}
+![](assets/team/hemanth.jpg)
+
+[Hemanth Manjunatha]{.member-name}
+[Assistant Professor, MAE]{.member-role}
+[Oklahoma State University]{.member-affil}
+[iHuman Lab](https://ihuman-lab.github.io/lab-website/){.member-lab}
+:::
+
+::: {.member}
+![](assets/team/esfahani.jpg)
+
+[Ehsan T. Esfahani]{.member-name}
+[Associate Professor, MAE]{.member-role}
+[University at Buffalo]{.member-affil}
+[Human In the Loop Systems (HILS) Lab](https://www.acsu.buffalo.edu/~ehsanesf/){.member-lab}
+:::
+
+::: {.member}
+![](assets/team/chowdhury.jpg)
+
+[Souma Chowdhury]{.member-name}
+[Associate Professor, MAE]{.member-role}
+[University at Buffalo]{.member-affil}
+[ADAMS Lab](https://adams.eng.buffalo.edu/){.member-lab}
+:::
+
+::: {.member}
+![](assets/team/dantu.jpg)
+
+[Karthik Dantu]{.member-name}
+[Associate Professor, CSE]{.member-role}
+[University at Buffalo]{.member-affil}
+[DRONES Lab](http://drones.cse.buffalo.edu/){.member-lab}
+:::
+
+:::
+
+::: {.member-link}
+SHaSTA was built with UB alumni Prajit KrisshnaKumar, Joseph Distefano, Payam Ghassemi, Amir Behjat and Apurv Jani.
+:::
+
 ## What This Tutorial [Covers]{.accent}
 
 ::: {.hook}
-By the end, you'll have run a real swarm mission and written your own SHASTA experiment.
+By the end, you'll have run a real swarm mission and written your own SHaSTA experiment.
 :::
 
-::: {.flow-diagram}
+::: {.flow-diagram .compact}
 ::: {.flow-step}
-**Part 1 — Why SHASTA**
+**Part 1 — Why SHaSTA**
 what it simulates, and why
 :::
 ::: {.flow-arrow}
 ↓
 :::
 ::: {.flow-step}
-**Part 2 — Install SHASTA**
+**Part 2 — Install SHaSTA**
 from a clean checkout to your first mission
 :::
 ::: {.flow-arrow}
@@ -70,13 +120,13 @@ the Python API, and your own experiment
 
 ::: {.divider}
 [Part One]{.divider-kicker}
-[Why SHASTA]{.divider-title}
+[Why SHaSTA]{.divider-title}
 [what it simulates, and why]{.divider-subtitle}
 [OSM maps → pybullet world → swarms → a Gymnasium interface]{.divider-path}
 :::
 
 ::: {.you-are-here}
-[Why SHASTA]{.stop .here} [Install SHASTA]{.stop} [Experience a Mission]{.stop} [Configure & Extend]{.stop}
+[Why SHaSTA]{.stop .here} [Install SHaSTA]{.stop} [Experience a Mission]{.stop} [Configure & Extend]{.stop}
 :::
 
 ---
@@ -105,12 +155,12 @@ What the human sees and how they issue orders — a map click, a voice command, 
 :::
 
 ::: {.punchline}
-SHASTA is that testbed — and every one of those three is a config change, not a rewrite.
+SHaSTA is that testbed — and every one of those three is a config change, not a rewrite.
 :::
 
-## What Is [SHASTA]{.accent}
+## What Is [SHaSTA]{.accent}
 
-**S**imulator for **H**uman-**A**utonomy and **S**warm **T**eaming **A**pplications — a [pybullet](https://pybullet.org)-based simulator for studying human–swarm interaction on real city maps built from OpenStreetMap.
+**S**imulator for **H**uman **a**nd **S**warm **T**eam **A**pplications ([Manjunatha et al., 2024](https://doi.org/10.21203/rs.3.rs-4338790/v1)) — a [pybullet](https://pybullet.org)-based simulator for studying human–swarm interaction on real city maps built from OpenStreetMap.
 
 ::: {.cards}
 ::: {.card}
@@ -193,7 +243,7 @@ One real place — buildings and streets pulled straight from OpenStreetMap. Thi
 
 ## The [Teaming Loop]{.accent}
 
-::: {.loop-grid}
+::: {.loop-grid .cols-4}
 ::: {.loop-step}
 [1]{.loop-number}[Order]{.loop-title}
 
@@ -224,64 +274,41 @@ Every mission is one pass through this loop, over and over — and "Execute" is 
 
 ::: {.divider}
 [Part Two]{.divider-kicker}
-[Install SHASTA]{.divider-title}
+[Install SHaSTA]{.divider-title}
 [from a clean checkout to your first mission]{.divider-subtitle}
 [a clone, a venv, one `pip install -e`, two checkpoint commands]{.divider-path}
 :::
 
 ::: {.you-are-here}
-[Why SHASTA]{.stop} [Install SHASTA]{.stop .here} [Experience a Mission]{.stop} [Configure & Extend]{.stop}
+[Why SHaSTA]{.stop} [Install SHaSTA]{.stop .here} [Experience a Mission]{.stop} [Configure & Extend]{.stop}
 :::
 
 ---
 
-## Install [SHASTA]{.accent}
-
-```bash
-pip install "ihuman-shasta[gui]"
-```
-
-::: {.card .secondary}
-[Not on PyPI yet]{.card-title}
-As of this tutorial, `ihuman-shasta` isn't published to PyPI — `pip install` fails with "No matching distribution found." Install from a clone instead (next slide). Check `pip install ihuman-shasta` again before your own session; this may already be fixed.
-:::
-
-## Install From a [Clone]{.accent}
+## Install [SHaSTA]{.accent}
 
 ```bash
 git clone <the shasta-ub repository>
 cd shasta-ub
 python -m venv .venv && source .venv/bin/activate
-pip install -e ".[gui]"
+pip install -e ".[gui]"     # [gui] adds `shasta gui`; Python 3.9 or newer
 ```
 
-`[gui]` adds the human interface (`shasta gui`). Python 3.9 or newer.
-
-::: {.checkpoint}
-**Verified in this tutorial** — a clean editable install from a fresh checkout completes with no errors, on Python 3.10, from an empty virtual environment.
-:::
-
-## Checkpoint: [Verify the Install]{.accent}
+Then verify:
 
 ```bash
 shasta maps      # list the maps available
-shasta demo      # headless — prints swarm progress, no window
+shasta demo      # headless: prints swarm progress, no window
 ```
 
 ::: {.checkpoint}
-**`shasta maps` should print** a list of city names: `buffalo-small`, `buffalo-medium`, `chicago`, `new-york`, `san-jose`, and more.
-
-**`shasta demo` should print**, and end with "All groups reached their targets":
-```
-Targets (map nodes): {0: 79, 1: 59}
-step    0 centroids {0: [-350.6, -48.7], 1: [54.7, 82.4]}
-...
-step 1174 centroids {0: [-20.7, 147.6], 1: [123.9, 5.4]}
-All groups reached their targets after 1174 steps.
-```
+**`shasta maps` should list** city names such as `buffalo-small`, `buffalo-medium`, `chicago`, `new-york`. **`shasta demo` should end with** "All groups reached their targets after 1174 steps." Then the install is good, no 3D window needed yet. Verified from a fresh checkout on Python 3.10.
 :::
 
-If you see both of those, the install is good — no 3D window needed yet.
+::: {.card .secondary}
+[Not on PyPI yet]{.card-title}
+`pip install "ihuman-shasta[gui]"` fails with "No matching distribution found." Install from a clone as above. Check PyPI again before your own session; this may already be fixed.
+:::
 
 ---
 
@@ -293,7 +320,7 @@ If you see both of those, the install is good — no 3D window needed yet.
 :::
 
 ::: {.you-are-here}
-[Why SHASTA]{.stop} [Install SHASTA]{.stop} [Experience a Mission]{.stop .here} [Configure & Extend]{.stop}
+[Why SHaSTA]{.stop} [Install SHaSTA]{.stop} [Experience a Mission]{.stop .here} [Configure & Extend]{.stop}
 :::
 
 ---
@@ -387,7 +414,7 @@ Try it now: pick a group, click a target near a street, press Enter.
 :::
 
 ::: {.you-are-here}
-[Why SHASTA]{.stop} [Install SHASTA]{.stop} [Experience a Mission]{.stop} [Configure & Extend]{.stop .here}
+[Why SHaSTA]{.stop} [Install SHaSTA]{.stop} [Experience a Mission]{.stop} [Configure & Extend]{.stop .here}
 :::
 
 ---
@@ -427,7 +454,7 @@ env.close()
 All four below are things this tutorial hit directly while testing every command and snippet in it — not hypothetical.
 :::
 
-::: {.cards .vertical}
+::: {.cards .cols-2}
 ::: {.card .secondary}
 [The map lives one level deeper than you'd guess]{.card-title}
 `config['experiment']['map_to_use'] = "buffalo-medium"` — not `config['core']['map_name']`, which doesn't exist.
@@ -494,7 +521,7 @@ Thanks!
 :::
 
 ::: {style="font-size:1.5rem; color:#EC672C; margin-top:1.2rem; font-weight:700;"}
-Questions? See the SHASTA repository README.
+Questions? See the SHaSTA repository README.
 :::
 
 ::: {style="font-size:1.5rem; color:rgba(255,255,255,0.35); margin-top:1rem; letter-spacing:2px;"}

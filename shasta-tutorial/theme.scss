@@ -548,7 +548,7 @@ $heading-font: "Rubik", sans-serif !default;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 70vh;
+    height: 504px;  /* 70% of the 720px slide; not vh, which follows the browser window and overflows the scaled slide */
     text-align: center;
 }
 
@@ -894,3 +894,123 @@ $heading-font: "Rubik", sans-serif !default;
     line-height: 1.4;
     color: rgba(255,255,255,0.75);
 }
+
+
+/* Team — ::: {.team} containing ::: {.member} fenced divs, each with a photo,
+   [name]{.member-name} and [role]{.member-role}. Copied from the MOSAIC tutorial;
+   .cols-4 fits four people across. */
+.team {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 0.6rem;
+    text-align: center;
+}
+.team.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* !important: the generic content-image rule wins on specificity via its :not() */
+.reveal .slides section .member img {
+    width: 190px;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 50% !important;
+    border: 3px solid $primary-color;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    margin: 0 auto 0.5rem;
+}
+
+.member p {
+    font-size: 0.7em;
+    line-height: 1.4;
+    margin: 0.3rem 0 0;
+}
+
+.member-name {
+    display: block;
+    font-weight: 700;
+    color: $primary-color;
+    font-size: 1.1em;
+}
+
+.member-role {
+    display: block;
+    font-size: 0.78em;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 0.15rem;
+}
+
+.member-affil {
+    display: block;
+    font-size: 0.8em;
+    color: rgba(255,255,255,0.85);
+    margin-top: 0.2rem;
+}
+
+.member-link p {
+    max-width: 1040px;
+    margin: 0.9rem auto 0;
+    font-size: 0.8em;
+    color: rgba(255,255,255,0.88);
+    line-height: 1.45;
+    text-align: center;
+}
+.member-link p a {
+    color: $primary-color;
+    font-weight: 700;
+}
+
+/* Lab link under a team member's institution */
+.member a.member-lab {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.8em;
+    font-weight: 700;
+    color: $primary-color;
+}
+
+/* Title slide hierarchy: SHaSTA, then its full name, then the tagline at a lower size
+   (same pattern as the MOSAIC tutorial). */
+#title-slide .title .title-fullname {
+    display: block;
+    margin-top: 0.25em;
+    font-size: 0.5em;
+    font-weight: 800;
+    line-height: 1.15;
+}
+#title-slide .subtitle span {
+    display: block;
+}
+#title-slide .subtitle .title-tagline {
+    margin-top: 0.2rem;
+    color: rgba(255,255,255,0.88);
+    font-size: 1em;
+    font-weight: 500;
+}
+
+/* Tighter flow diagram — ::: {.flow-diagram .compact} keeps a four-step list on one slide. */
+.flow-diagram.compact {
+    gap: 0;
+    margin-top: 0.3rem;
+}
+.flow-diagram.compact .flow-step {
+    padding: 0.4rem 1.2rem;
+}
+.flow-diagram.compact .flow-arrow,
+.flow-diagram.compact .flow-arrow p {
+    line-height: 0.9;
+    font-size: 1em;
+    margin: 0;
+}
+
+/* Fixed two-column card grid — ::: {.cards .cols-2} (four cards never wrap 3 + 1). */
+.cards.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* Four steps on one row — ::: {.loop-grid .cols-4} (the default grid is 3 columns, so 4 steps wrap 3 + 1). */
+.loop-grid.cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.loop-grid.cols-4 { margin-top: 1.4rem; }
+.loop-grid.cols-4 .loop-step { min-height: 210px; }
+.loop-grid.cols-4 + .band { margin-top: 1.6rem; }

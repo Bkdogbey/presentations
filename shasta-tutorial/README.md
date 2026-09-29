@@ -1,20 +1,24 @@
-# SHASTA Tutorial
+# SHaSTA Tutorial
 
-A hands-on introduction to [SHASTA](https://pybullet.org) (Simulator for Human-Autonomy and Swarm Teaming Applications) for HCI and human-factors researchers, built on the iHuman Lab Quarto reveal.js template — structured the same way as [`mosaic-smc-tutorial`](../mosaic-smc-tutorial/), the sibling tutorial for MOSAIC.
+A hands-on introduction to [SHaSTA](https://doi.org/10.21203/rs.3.rs-4338790/v1) (Simulator for Human And Swarm Team Applications) for HCI and human-factors researchers, built on the iHuman Lab Quarto reveal.js template — structured the same way as [`mosaic-smc-tutorial`](../mosaic-smc-tutorial/), the sibling tutorial for MOSAIC.
 
-The narrative thread is human–swarm teaming: SHASTA is a pybullet-based testbed where UAV and UGV groups move in formation along real city street networks (built from OpenStreetMap), commanded by a human, a scripted policy, or an RL agent through one Gymnasium interface. The deck is four parts:
+The narrative thread is human–swarm teaming: SHaSTA is a pybullet-based testbed where UAV and UGV groups move in formation along real city street networks (built from OpenStreetMap), commanded by a human, a scripted policy, or an RL agent through one Gymnasium interface. The deck is four parts:
 
-1. **Why SHASTA** — the human–swarm teaming question, what SHASTA is, how the OSM → OSM2World → pybullet → Gymnasium pipeline fits together, and the order/plan/execute/observe teaming loop
-2. **Install SHASTA** — the PyPI package isn't published yet, so this installs from a clone, then verifies with `shasta maps` and `shasta demo`
+1. **Why SHaSTA** — the human–swarm teaming question, what SHaSTA is, how the OSM → OSM2World → pybullet → Gymnasium pipeline fits together, and the order/plan/execute/observe teaming loop
+2. **Install SHaSTA** — the PyPI package isn't published yet, so this installs from a clone, then verifies with `shasta maps` and `shasta demo`
 3. **Experience a mission** — no code: `shasta gui`, the controls table, and what the side panel shows
 4. **Configure & extend** — the Python API (`ShastaEnv`, `load_config`, `GoToNodeExperiment`), three real gotchas found while building this tutorial, and writing your own experiment by subclassing `BaseExperiment`
 
+## Team
+
+SHaSTA is a joint project of Oklahoma State University (iHuman Lab) and the University at Buffalo. Slide 2 introduces Hemanth Manjunatha (OSU) and Ehsan T. Esfahani, Souma Chowdhury and Karthik Dantu (UB), and credits the other authors of the [SHaSTA paper](https://doi.org/10.21203/rs.3.rs-4338790/v1). Photos are in `assets/team/`; roles and photos were taken from public university pages and should be checked with each person.
+
 ## Status
 
-This is a first working draft, not a rehearsed multi-hour workshop like the MOSAIC tutorial yet. Everything in the deck — every command, every code snippet, both lab scripts — was actually run against a clean editable install of SHASTA while writing this, not just described from the README. What's *not* yet done:
+This is a first working draft, not a rehearsed multi-hour workshop like the MOSAIC tutorial yet. Everything in the deck — every command, every code snippet, both lab scripts — was actually run against a clean editable install of SHaSTA while writing this, not just described from the README. What's *not* yet done:
 
 - No `shasta gui` screenshots — the assets here are headless offscreen renders (`pybullet`'s software `TinyRenderer`, via `p.DIRECT`), which don't need a display but also don't show the actual GUI chrome (side panel, buttons, event log). Getting real GUI screenshots needs either a machine with a display or a virtual one (Xvfb) that wasn't available when this was built.
-- No GIFs of an actual mission playing out (MOSAIC's tutorial has several, captured with dedicated `tools/capture_*.py` scripts against a running game — SHASTA has no equivalent capture tooling yet).
+- No GIFs of an actual mission playing out (MOSAIC's tutorial has several, captured with dedicated `tools/capture_*.py` scripts against a running game — SHaSTA has no equivalent capture tooling yet).
 - Not rehearsed against a live audience, so there's no `RUNSHEET.md` timing data from an actual run — the timings in `RUNSHEET.md` are estimates.
 - `shasta fetch-osm` / `shasta build-map` (building a map of your own site) is described in the deck but not exercised here — it needs Java and network access to the Overpass API.
 
@@ -27,7 +31,7 @@ shasta-tutorial/
 ├── README.md              # this file
 ├── SETUP.md               # send this to attendees before the session
 ├── RUNSHEET.md             # facilitator timings (estimated, not yet rehearsed)
-├── assets/                 # figures used in the deck
+├── assets/                 # figures used in the deck (team/ holds the portraits)
 └── labs/                   # tested standalone scripts the deck points to
     ├── play.py               # a minimal mission with an EDIT ME block of knobs
     └── custom_experiment.py  # the smallest complete BaseExperiment subclass
@@ -51,7 +55,7 @@ Run both from this directory. Navigate with arrow keys, `f` for fullscreen, `s` 
 | `swarm-topdown.png` | Same technique, top-down, captured a few steps into a `GoToNodeExperiment` mission — the small markers near the center-left are the UAV group. Used on the "Open the GUI" slide as a stand-in until a real `shasta gui` screenshot exists. |
 | `logo.png`, `background.jpg` | iHuman Lab template, unmodified. |
 
-All three SHASTA renders were captured with a short throwaway script (not checked in) that builds a `ShastaEnv`, steps it a few times, and calls `env.core.physics_client.getCameraImage(...)` directly — see the Configure & Extend part of the deck for the underlying API. Regenerating or adding more views just needs that same pattern with a different `cameraEyePosition`/`cameraTargetPosition`.
+All three SHaSTA renders were captured with a short throwaway script (not checked in) that builds a `ShastaEnv`, steps it a few times, and calls `env.core.physics_client.getCameraImage(...)` directly — see the Configure & Extend part of the deck for the underlying API. Regenerating or adding more views just needs that same pattern with a different `cameraEyePosition`/`cameraTargetPosition`.
 
 ## Repo issues this tutorial exposed
 
@@ -66,6 +70,6 @@ Verified against a clean editable install (`pip install -e ".[gui]"`) of this ch
 ## Before presenting
 
 1. Send `SETUP.md` to registrants ahead of time.
-2. Re-run every command in Part 2 against the current `main` of the SHASTA repo — issue 1 above (PyPI) may be resolved by then.
+2. Re-run every command in Part 2 against the current `main` of the SHaSTA repo — issue 1 above (PyPI) may be resolved by then.
 3. Read `RUNSHEET.md` — its timings are estimates, not yet validated against a live run; adjust after your first dry run.
 4. Decide whether to attempt a real `shasta gui` screenshot session beforehand (needs a display or Xvfb) — Part 3 currently uses a headless render as a stand-in.

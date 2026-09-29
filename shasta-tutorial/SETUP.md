@@ -1,4 +1,4 @@
-# Setup — Before the SHASTA Tutorial
+# Setup — Before the SHaSTA Tutorial
 
 Send this to registrants at least a few days ahead. Doing this in advance means the session starts with a working install instead of everyone debugging `pip` together.
 
@@ -6,7 +6,7 @@ Send this to registrants at least a few days ahead. Doing this in advance means 
 
 - Python 3.9 or newer
 - `git`
-- About 10 minutes and a stable connection (the install pulls the SHASTA map assets, which include some multi-MB city maps)
+- About 10 minutes and a stable connection (the install pulls the SHaSTA map assets, which include some multi-MB city maps)
 
 ## Install
 

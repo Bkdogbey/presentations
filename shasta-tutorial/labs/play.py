@@ -1,4 +1,4 @@
-"""A minimal SHASTA mission — run it, then edit the block below and run it again.
+"""A minimal SHaSTA mission — run it, then edit the block below and run it again.
 
     python labs/play.py
 

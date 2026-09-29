@@ -1,13 +1,13 @@
-# Run Sheet — SHASTA Tutorial
+# Run Sheet — SHaSTA Tutorial
 
 These timings are **estimates**, not yet validated against a live run (see `README.md`'s Status section) — do a full dry run yourself and adjust before presenting to a real audience. They assume attendees followed `SETUP.md` beforehand and arrive with a working install.
 
-## Timing (approx. 50 minutes, 21 slides)
+## Timing (approx. 50 minutes, 20 slides)
 
 | Part | Slides | Time | What happens |
 |---|---|---|---|
-| 1. Why SHASTA | 6 | ~10 min | Talk-through, no hands-on. The full-bleed map slide is a good place to pause for questions — it's the most concrete "oh, I get it" moment before any code. |
-| 2. Install SHASTA | 3 | ~10 min | Everyone runs `shasta maps` and `shasta demo` live. This is the first failure-prone checkpoint — see below. |
+| 1. Why SHaSTA | 7 | ~10 min | Talk-through, no hands-on. The full-bleed map slide is a good place to pause for questions — it's the most concrete "oh, I get it" moment before any code. |
+| 2. Install SHaSTA | 1 | ~10 min | Everyone runs `shasta maps` and `shasta demo` live. This is the first failure-prone checkpoint — see below. |
 | 3. Experience a mission | 3 | ~10 min | Everyone runs `shasta gui` and sends at least one group somewhere. Let this run long if the room is engaged; it's the most memorable part. |
 | 4. Configure & extend | 8 | ~15–20 min | Mix of talk-through (the gotchas slide) and live typing (the Python API snippet, then `labs/custom_experiment.py`). |
 | Wrap-up | 1 | ~5 min | Point people at `labs/` and the main repo README. |
