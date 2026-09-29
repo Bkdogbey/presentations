@@ -1,0 +1,34 @@
+project:
+  type: website
+  resources:
+    - assets/
+  render:
+    - index.qmd
+    - "*/*.qmd"
+    - "pi/*/*.qmd"
+    - "phd/*/*.qmd"
+    - "master/*/*.qmd"
+    - "undergraduate/*/*.qmd"
+    - "alumni/*/*.qmd"
+
+website:
+  title: 'iHuman Lab Presentations'
+  favicon: assets/logo.png
+  navbar:
+    logo: assets/logo.png
+    right:
+      - icon: github
+        href: https://github.com/iHuman-Lab/presentations
+        target: _blank
+    left:
+      - href: index.qmd
+        text: Presentations
+      - href: https://ihuman-lab.github.io/lab-website/
+        text: Lab Website
+        target: _blank
+
+format:
+  html:
+    theme: [cosmo, custom.scss]
+    toc: false
+    link-external-newwindow: true

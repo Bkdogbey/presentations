@@ -1,6 +1,6 @@
 # SHASTA Tutorial
 
-A hands-on introduction to [SHASTA](https://pybullet.org) (Simulator for Human-Autonomy and Swarm Teaming Applications) for HCI and human-factors researchers, built on the iHuman Lab Quarto reveal.js template — structured the same way as [`mosaic-smc-tutorial`](../../mosaic-smc-tutorial/), the sibling tutorial for MOSAIC.
+A hands-on introduction to [SHASTA](https://pybullet.org) (Simulator for Human-Autonomy and Swarm Teaming Applications) for HCI and human-factors researchers, built on the iHuman Lab Quarto reveal.js template — structured the same way as [`mosaic-smc-tutorial`](../mosaic-smc-tutorial/), the sibling tutorial for MOSAIC.
 
 The narrative thread is human–swarm teaming: SHASTA is a pybullet-based testbed where UAV and UGV groups move in formation along real city street networks (built from OpenStreetMap), commanded by a human, a scripted policy, or an RL agent through one Gymnasium interface. The deck is four parts:
 
@@ -21,7 +21,7 @@ This is a first working draft, not a rehearsed multi-hour workshop like the MOSA
 ## Contents
 
 ```
-presentation/
+shasta-tutorial/
 ├── shasta-tutorial.qmd   # the deck — edit this
 ├── theme.scss             # lab theme (unmodified from the templates repo)
 ├── README.md              # this file
@@ -40,7 +40,7 @@ quarto render shasta-tutorial.qmd     # build once
 quarto preview shasta-tutorial.qmd    # live-reload while editing
 ```
 
-Run both from this `presentation/` directory. Navigate with arrow keys, `f` for fullscreen, `s` for speaker notes.
+Run both from this directory. Navigate with arrow keys, `f` for fullscreen, `s` for speaker notes.
 
 ## Assets
 

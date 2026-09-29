@@ -8,7 +8,10 @@ title: "SHASTA Tutorial<br>Simulating [Human-Swarm Teaming]{.accent} on Real Cit
 subtitle: "A hands-on introduction to the SHASTA simulator"
 author: "Hemanth Manjunatha"
 institute: "Oklahoma State University"
-date: today
+date: "2026-09-29"
+description: "A hands-on introduction to SHASTA: install it, run a human-swarm mission in the GUI, and write your own experiment."
+image: assets/world-overview.png
+event_type: "Tutorial"
 format:
   revealjs:
     theme: [default, theme.scss]

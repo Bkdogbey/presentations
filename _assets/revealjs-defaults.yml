@@ -1,0 +1,14 @@
+format:
+  revealjs:
+    theme: [default, ../_assets/theme.scss]
+    slide-number: false
+    transition: fade
+    background-transition: fade
+    logo: ../assets/logo.png
+    footer: "iHuman Lab · Oklahoma State University"
+    width: 1280
+    height: 720
+    margin: 0.1
+    navigation-mode: linear
+    controls: true
+    progress: true

@@ -1,0 +1,27 @@
+---
+pagetitle: "iHuman Lab Presentations"
+listing:
+  contents:
+    - "*/*.qmd"
+    - "pi/*/*.qmd"
+    - "phd/*/*.qmd"
+    - "master/*/*.qmd"
+    - "undergraduate/*/*.qmd"
+    - "alumni/*/*.qmd"
+  template: assets/presentations.ejs
+  fields: [title, author, description, date, event_type, image, path]
+  sort: "date desc"
+  max-items: 100
+toc: false
+page-layout: full
+---
+
+```{=html}
+<div class="page-banner">
+  <img src="assets/banner.png" alt="Banner">
+  <div class="hero-content">
+    <div class="hero-eyebrow">iHuman Lab · Oklahoma State University</div>
+    <div class="hero-title-top">iHuman Lab <span class="hero-title-accent">Presentations</span></div>
+  </div>
+</div>
+```

@@ -1,0 +1,22 @@
+<% const plainTitle = (t) => (t || '').replace(/\[([^\]]*)\]\{[^}]*\}/g, '$1').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(); %>
+<div class="outreach-grid">
+<% for (const item of items.filter(i => i.title)) { %>
+<% const authors = [].concat(item.author || []).map(a => typeof a === 'string' ? a : (a.name || '')).filter(Boolean).join(', '); %>
+<% const rawDate = item.date ? new Date(item.date) : null; %>
+<% const d = rawDate ? rawDate.toLocaleDateString('en-US', {month: 'long', year: 'numeric', timeZone: 'UTC'}) : ''; %>
+<div class="outreach-card">
+<a class="outreach-stretched-link" href="<%= item.path.replace(/\\/g, '/').replace(/\.(qmd|html)$/, '') + '.html' %>" target="_blank" rel="noopener"></a><% if (item.image) { %><div class="outreach-card-img-wrap"><img src="<%= item.image %>" alt="<%= plainTitle(item.title) %>" class="outreach-card-img" /></div><% } %>
+<div class="outreach-card-top">
+<div class="outreach-card-title"><%= plainTitle(item.title) %></div>
+</div>
+<div class="outreach-card-body">
+<% if (authors) { %><div class="outreach-card-author"><%= authors %></div><% } %>
+<div class="outreach-card-desc"><%= item.description %></div>
+<% if (d) { %><div class="outreach-card-meta"><span class="outreach-meta-item"><span class="outreach-meta-icon">&#x1F4C5;</span><%= d %></span></div><% } %>
+</div>
+<div class="outreach-card-footer">
+<span class="outreach-badge"><%= item.event_type || 'Presentation' %></span>
+</div>
+</div>
+<% } %>
+</div>

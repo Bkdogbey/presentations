@@ -1,0 +1,32 @@
+---
+# Starter deck. Copy this whole folder's contents to  <role>/<First_Last>/<deck-name>.qmd
+# (role = phd, master, undergraduate or alumni) and edit. See the README for the full steps.
+metadata-files:
+  - ../../_assets/revealjs-defaults.yml   # lab theme, logo and footer; keep this line
+title: "Your Title<br>With an [Accent]{.accent} Phrase"
+subtitle: "Where and why you are presenting"
+author: "First Last"
+institute: "Oklahoma State University"
+date: "2026-01-31"                        # fixed date (YYYY-MM-DD), not `today`
+# The fields below make your card on the home page. Keep them.
+description: "One or two sentences on what the talk covers."
+image: cover.png                          # a picture in your folder, shown on the card
+event_type: "Conference Talk"             # e.g. Conference Talk, Poster, Defense, Tutorial, Lab Meeting
+---
+
+## First Slide
+
+::: {.hook}
+One-sentence takeaway.
+:::
+
+- Point one
+- Point two
+
+## Second Slide
+
+Put images in your own folder and reference them relatively, e.g. `![](cover.png)`.
+
+## Thank You {background-color="#252525"}
+
+Questions?
