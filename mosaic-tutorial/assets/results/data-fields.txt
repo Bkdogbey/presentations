@@ -1,0 +1,1 @@
+['agent_dir', 'agent_x', 'agent_y', 'carrying', 'direction', 'grid', 'image', 'max_steps', 'mission', 'mission_status', 'num_cols', 'num_rows', 'remaining_victims', 'room_size', 'saved_victims', 'step_count', 'victim_health']

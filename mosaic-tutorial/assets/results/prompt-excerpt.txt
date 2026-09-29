@@ -1,0 +1,9 @@
+Agent: room (0,1) facing West | Carrying: nothing | Victims remaining: 18 | Steps left: 16200
+
+Object       Direction  Visible  Reachable  PathLength
+Victim4      East       Yes      Yes        9
+Victim2      South      Yes      Yes        0
+RedKey1      East       Yes      Yes        5
+PurpleKey1   East       Yes      Yes        6
+PurpleDoor1  South      Yes      Yes        34
+RedDoor1     East       No       Yes        10
