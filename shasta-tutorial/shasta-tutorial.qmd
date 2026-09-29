@@ -5,11 +5,11 @@
 # Render with:  quarto render shasta-tutorial.qmd
 #               quarto preview shasta-tutorial.qmd   (live-reload while editing)
 title: "SHaSTA<span class='title-fullname'>Simulator for Human And Swarm<br>[Team Applications]{.accent}</span>"
-subtitle: "<span class='title-tagline'>A hands-on tutorial: simulating human–swarm teaming on real city maps</span>"
+subtitle: "<span class='title-tagline'>A hands-on tutorial: putting a human in the loop with a swarm</span>"
 author: "Hemanth Manjunatha"
 institute: "Oklahoma State University · University at Buffalo"
 date: "2026-09-29"
-description: "A hands-on introduction to SHaSTA: install it, run a human-swarm mission in the GUI, and write your own experiment."
+description: "A hands-on introduction to SHaSTA for human–swarm interaction research: put a human in the loop, log what they do with LSL, and write your own experiment."
 image: assets/world-overview.png
 event_type: "Tutorial"
 format:
@@ -85,34 +85,34 @@ SHaSTA was built with UB alumni Prajit KrisshnaKumar, Joseph Distefano, Payam Gh
 ## What This Tutorial [Covers]{.accent}
 
 ::: {.hook}
-By the end, you'll have run a real swarm mission and written your own SHaSTA experiment.
+You will put a person in front of a swarm, record them on one clock, and swap in your own pieces.
 :::
 
 ::: {.flow-diagram .compact}
 ::: {.flow-step}
-**Part 1 — Why SHaSTA**
-what it simulates, and why
+**Part 1 — Why human–swarm interaction**
+what to study, and what to measure
 :::
 ::: {.flow-arrow}
 ↓
 :::
 ::: {.flow-step}
 **Part 2 — Install SHaSTA**
-from a clean checkout to your first mission
+from a clean checkout to a first mission
 :::
 ::: {.flow-arrow}
 ↓
 :::
 ::: {.flow-step}
-**Part 3 — Experience a mission**
-no code — just the GUI
+**Part 3 — Put a human in the loop**
+the built-in interface, or your own
 :::
 ::: {.flow-arrow}
 ↓
 :::
 ::: {.flow-step}
-**Part 4 — Configure & extend**
-the Python API, and your own experiment
+**Part 4 — Measure the human, then extend**
+LSL, and your own experiment
 :::
 :::
 
@@ -120,13 +120,13 @@ the Python API, and your own experiment
 
 ::: {.divider}
 [Part One]{.divider-kicker}
-[Why SHaSTA]{.divider-title}
-[what it simulates, and why]{.divider-subtitle}
-[OSM maps → pybullet world → swarms → a Gymnasium interface]{.divider-path}
+[Why Human–Swarm Interaction]{.divider-title}
+[the question, and what you need to study it]{.divider-subtitle}
+[operator → swarm → measurement]{.divider-path}
 :::
 
 ::: {.you-are-here}
-[Why SHaSTA]{.stop .here} [Install SHaSTA]{.stop} [Experience a Mission]{.stop} [Configure & Extend]{.stop}
+[Why Human–Swarm]{.stop .here} [Install SHaSTA]{.stop} [Human in the Loop]{.stop} [Measure & Extend]{.stop}
 :::
 
 ---
@@ -134,140 +134,84 @@ the Python API, and your own experiment
 ## The [Question]{.accent}
 
 ::: {.hook}
-How should a human coordinate a team of autonomous vehicles they can't fully see or predict?
+How should a person supervise a team of autonomous vehicles they can't fully see or predict?
 :::
 
-That's the human–swarm teaming question, and it shows up everywhere from disaster response to warehouse logistics to military reconnaissance. Answering it experimentally needs a testbed where three things are all changeable by the researcher, not fixed by the platform:
+Human–swarm teams are used in disaster response, logistics and defence. What makes them hard to study is the person: too many vehicles overload them, they step in too much or too little, and they trust the swarm too much or too little. A useful testbed has to change four things, and measure the human.
 
-::: {.cards}
+::: {.cards .cols-4}
 ::: {.card}
-[The World]{.card-title}
-A real place, not an abstract grid — because how a human reads a street or a building matters to how they command a swarm in it.
+[Interface]{.card-title}
+How the person sees the swarm and gives orders: maps, communication, even VR.
 :::
 ::: {.card}
-[The Swarm]{.card-title}
-How many vehicles, what kind, how they're organized — a formation of four drones is a different teaming problem than one of forty.
+[AI]{.card-title}
+Learning agents that can command the swarm or advise the person: reinforcement and imitation learning.
 :::
 ::: {.card}
-[The Interface]{.card-title}
-What the human sees and how they issue orders — a map click, a voice command, and a joystick each change what "teaming" means.
+[Human factors]{.card-title}
+What the person's body and behaviour reveal: physiological sensing such as EEG and eye tracking.
+:::
+::: {.card .secondary}
+[Swarm]{.card-title}
+The vehicles and their behaviours: formations, path planning, composable primitives.
 :::
 :::
 
 ::: {.punchline}
-SHaSTA is that testbed — and every one of those three is a config change, not a rewrite.
+SHaSTA is a testbed built around those four, with the human at the centre.
 :::
 
 ## What Is [SHaSTA]{.accent}
 
-**S**imulator for **H**uman **a**nd **S**warm **T**eam **A**pplications ([Manjunatha et al., 2024](https://doi.org/10.21203/rs.3.rs-4338790/v1)) — a [pybullet](https://pybullet.org)-based simulator for studying human–swarm interaction on real city maps built from OpenStreetMap.
+**S**imulator for **H**uman **a**nd **S**warm **T**eam **A**pplications ([Manjunatha et al., 2024](https://doi.org/10.21203/rs.3.rs-4338790/v1)), a [pybullet](https://pybullet.org)-based simulator for studying how people command and work with swarms. Four components:
 
-::: {.cards}
+::: {.cards .cols-4}
 ::: {.card}
-[Real Maps]{.card-title}
-Any place on Earth you can draw a bounding box around becomes a simulator map — real streets, real buildings.
+[SHaSTA core]{.card-title}
+The swarm simulation: pybullet physics on real OpenStreetMap city maps, UAV and UGV groups, formation and path planning.
 :::
 ::: {.card}
-[Two Vehicle Types]{.card-title}
-UAVs (aerial, blue) and UGVs (ground, red) move in formation along the street network.
-:::
-::: {.card}
-[Three Ways to Command]{.card-title}
-A human via the GUI, a scripted policy, or a reinforcement-learning agent — same Gymnasium interface underneath.
+[Human interface]{.card-title}
+Shows the swarm state and sends the operator's commands to the core.
 :::
 ::: {.card .secondary}
-[Real Physics]{.card-title}
-Vehicles move through an actual [pybullet](https://pybullet.org) physics simulation, not a grid-world abstraction — collisions, formation spacing, and 3D altitude are all real.
+[Data recording and sync]{.card-title}
+Lab Streaming Layer time-stamps the operator's inputs and mission events.
+:::
+::: {.card .secondary}
+[Physiological recording]{.card-title}
+EEG, eye tracking and other sensors, streamed onto the same clock.
 :::
 :::
 
-## How It [Fits Together]{.accent}
+Every mission runs the same loop, and each step can be logged:
 
-::: {.arch}
-
-::: {.arch-row}
-::: {.arch-block}
-[OPENSTREETMAP]{.arch-title}[`shasta fetch-osm`]{.arch-path}
-
-A bounding box (south, west, north, east) around any real place — a campus, a neighborhood, a city block.
-:::
-:::
-
-::: {.arch-link}
-becomes
-:::
-
-::: {.arch-row}
-::: {.arch-block}
-[OSM2WORLD]{.arch-title}[`shasta build-map`]{.arch-path}
-
-A custom tool turns the map into a 3D mesh and a street graph, fitting an affine transform so streets, buildings and vehicles all line up.
-:::
-:::
-
-::: {.arch-link}
-loads into
-:::
-
-::: {.arch-row}
-::: {.arch-block}
-[PYBULLET WORLD]{.arch-title}
-
-The mesh loads directly — no Blender step needed. UAV and UGV groups spawn on it and move via physics constraints.
-:::
-:::
-
-::: {.arch-link}
-drives
-:::
-
-::: {.arch-row}
-::: {.arch-block .secondary}
-[GYMNASIUM ENV]{.arch-title}
-
-`env.step({group_id: target_node})` is the one call that drives everything above it, whether the caller is a human, a script, or an RL agent.
-:::
-:::
-
-:::
-
-::: {.band}
-Every layer here is something a researcher can swap — a different city, a different vehicle mix, a different policy — without touching the layers above it.
-:::
-
-## {background-image="assets/world-angled.png" background-opacity="0.85"}
-
-::: {.slide-caption}
-One real place — buildings and streets pulled straight from OpenStreetMap. This is Buffalo, NY; the same pipeline works for any city.
-:::
-
-## The [Teaming Loop]{.accent}
-
-::: {.loop-grid .cols-4}
+::: {.loop-grid .cols-4 .short}
 ::: {.loop-step}
-[1]{.loop-number}[Order]{.loop-title}
+[1]{.loop-number}[Observe]{.loop-title}
 
-A human, a scripted policy, or an RL agent picks a group and a target node.
+The operator sees positions, battery, ammo and mission progress.
 :::
 ::: {.loop-step}
-[2]{.loop-number}[Plan]{.loop-title}
+[2]{.loop-number}[Decide]{.loop-title}
 
-`PathPlanning` finds a route for that group along the real street graph.
+They choose which group goes where.
 :::
 ::: {.loop-step .loop-decisive}
-[3]{.loop-number}[Execute]{.loop-title}
+[3]{.loop-number}[Command]{.loop-title}
 
-`Formation` flies or drives the group along the route, one tick at a time.
+`SwarmCommander` turns the order into a route on the street graph.
 :::
 ::: {.loop-step}
-[4]{.loop-number}[Observe]{.loop-title}
+[4]{.loop-number}[Execute]{.loop-title}
 
-Positions, battery, ammo, and mission progress come back as the observation.
+`Formation` moves the group along the route, and the state changes.
 :::
 :::
 
 ::: {.band}
-Every mission is one pass through this loop, over and over — and "Execute" is where a formation strategy, a communication delay, or a failure model gets injected.
+The paper describes all four components. Today's `ihuman-shasta` ships the core and the human interface; Part 4 adds the LSL layer around it.
 :::
 
 ---
@@ -275,12 +219,12 @@ Every mission is one pass through this loop, over and over — and "Execute" is 
 ::: {.divider}
 [Part Two]{.divider-kicker}
 [Install SHaSTA]{.divider-title}
-[from a clean checkout to your first mission]{.divider-subtitle}
-[a clone, a venv, one `pip install -e`, two checkpoint commands]{.divider-path}
+[from a clean checkout to a first mission]{.divider-subtitle}
+[clone → pip install -e → shasta demo]{.divider-path}
 :::
 
 ::: {.you-are-here}
-[Why SHaSTA]{.stop} [Install SHaSTA]{.stop .here} [Experience a Mission]{.stop} [Configure & Extend]{.stop}
+[Why Human–Swarm]{.stop} [Install SHaSTA]{.stop .here} [Human in the Loop]{.stop} [Measure & Extend]{.stop}
 :::
 
 ---
@@ -314,34 +258,49 @@ shasta demo      # headless: prints swarm progress, no window
 
 ::: {.divider}
 [Part Three]{.divider-kicker}
-[Experience a Mission]{.divider-title}
-[no code — just the GUI]{.divider-subtitle}
-[open it, pick a group, pick a target, send it]{.divider-path}
+[Put a Human in the Loop]{.divider-title}
+[the built-in interface, or your own]{.divider-subtitle}
+[shasta gui → SwarmCommander → your interface]{.divider-path}
 :::
 
 ::: {.you-are-here}
-[Why SHaSTA]{.stop} [Install SHaSTA]{.stop} [Experience a Mission]{.stop .here} [Configure & Extend]{.stop}
+[Why Human–Swarm]{.stop} [Install SHaSTA]{.stop} [Human in the Loop]{.stop .here} [Measure & Extend]{.stop}
 :::
 
 ---
 
-## Open the [GUI]{.accent}
+## Open the [Interface]{.accent}
 
+::: {.columns}
+::: {.column width="64%"}
+![](assets/gui.png){fig-alt="The human interface mid-mission: the map with UAV and UGV groups and targets, and the side panel with group status and an event log."}
+:::
+::: {.column width="36%"}
 ```bash
 shasta gui
 ```
 
-::: {.checkpoint}
-**You should see** a top-down map open, with your swarm groups on it (blue UAVs, red UGVs) and mission targets marked — no code needed for this part.
-:::
+::: {.check-card}
+[What you are looking at]{.check-title}
 
-![A real headless render of the same world the GUI shows — buildings and roads from the map mesh, with a UAV group (blue) and UGV group visible near the center-left.](assets/swarm-topdown.png){width="65%"}
+::: {.check-item}
+The map: blue UAVs, red UGVs, yellow targets
+:::
+::: {.check-item}
+The side panel: mission progress and the selected group's status
+:::
+::: {.check-item}
+The event log: every order and arrival
+:::
+:::
+:::
+:::
 
 ## The [Controls]{.accent}
 
 ::: {.key-grid}
 ::: {.key-row}
-[click]{.keycap .wide} [or]{.key-action} [`1`–`9`]{.keycap} [Pick a group — click its marker, click its button, or press its number]{.key-action}
+[click]{.keycap .wide} [or]{.key-action} [`1`–`9`]{.keycap} [Pick a group — click its marker, or press its number]{.key-action}
 :::
 ::: {.key-row}
 [click]{.keycap .wide} [Pick a target — click near a street node; a white cross marks it]{.key-action}
@@ -356,96 +315,132 @@ shasta gui
 [-]{.keycap} [`+`]{.keycap} [Slow down / speed up]{.key-action}
 :::
 ::: {.key-row}
-[R]{.keycap} [Reset the view]{.key-action} [mouse wheel zooms, right-drag pans]{.key-note}
-:::
-::: {.key-row}
 [V]{.keycap} [3D camera view, follows the selected group]{.key-action}
 :::
-:::
-
-**Send ALL groups** and **Cancel order** are buttons in the side panel, not keys — for when you want everyone moving at once, or to call off an order mid-flight.
-
-## What the [Side Panel]{.accent} Shows
-
-::: {.columns}
-::: {.column width="50%"}
-::: {.check-card}
-[While a mission is running]{.check-title}
-
-::: {.check-item}
-Mission progress — how many groups have reached their targets so far
-:::
-::: {.check-item}
-The selected group's battery, ammo, distance to target, and ETA
-:::
-::: {.check-item}
-An event log — orders sent, targets reached, groups arrived
-:::
-:::
-:::
-::: {.column width="50%"}
-::: {.check-card}
-[Options worth trying]{.check-title}
-
-::: {.check-item}
-`--map` — pick a different city (`shasta maps` lists them)
-:::
-::: {.check-item}
-`--uav-groups` / `--ugv-groups` — change the swarm composition
-:::
-::: {.check-item}
-`--seed` — reproduce the exact same mission again
-:::
-:::
+::: {.key-row}
+[panel]{.keycap .wide} [**Send ALL groups** and **Cancel order** are buttons in the side panel]{.key-action}
 :::
 :::
 
-::: {.punchline}
-Try it now: pick a group, click a target near a street, press Enter.
+**Options for your study:** `--uav-groups` / `--ugv-groups` set how many vehicles the operator supervises, `--targets` / `--time-limit` set difficulty and time pressure, and `--seed` gives the same targets every run so trials are comparable.
+
+## One Seam: [SwarmCommander]{.accent}
+
+The interface is a thin window on `SwarmCommander`, which has no display dependency. Anything that can call it can be the human:
+
+::: {.cards .cols-4}
+::: {.card}
+[Built-in interface]{.card-title}
+the window you just saw
+:::
+::: {.card}
+[Scripted operator]{.card-title}
+a policy that plays the human
+:::
+::: {.card}
+[AI advisor]{.card-title}
+suggests or issues orders
+:::
+::: {.card}
+[Your interface]{.card-title}
+a web page, joystick, VR
+:::
+:::
+
+```python
+from shasta.interaction import Mission, SwarmCommander
+
+commander = SwarmCommander(env, Mission.random(env.core.get_map(), 2, seed=0))
+commander.send(0, commander.mission.targets[0])   # the human's orders
+commander.send(1, commander.mission.targets[1])
+while not commander.mission.is_over(commander.step_count):
+    commander.update()                            # advance one tick
+print(commander.events)                           # what happened, and when
+```
+
+::: {.checkpoint}
+**Verified in this tutorial** — `labs/human_loop.py` runs this with no interface and no window. Set `headless=False` in `load_config` to watch it in the pybullet 3D window.
 :::
 
 ---
 
 ::: {.divider}
 [Part Four]{.divider-kicker}
-[Configure & Extend]{.divider-title}
-[the Python API, and your own experiment]{.divider-subtitle}
-[drive it headless, then subclass BaseExperiment]{.divider-path}
+[Measure the Human, Then Extend]{.divider-title}
+[one clock for everything the person and the swarm do]{.divider-subtitle}
+[events → LSL → recorder → analysis]{.divider-path}
 :::
 
 ::: {.you-are-here}
-[Why SHaSTA]{.stop} [Install SHaSTA]{.stop} [Experience a Mission]{.stop} [Configure & Extend]{.stop .here}
+[Why Human–Swarm]{.stop} [Install SHaSTA]{.stop} [Human in the Loop]{.stop} [Measure & Extend]{.stop .here}
 :::
 
 ---
 
-## Drive It From [Python]{.accent}
+## Why [LSL]{.accent}
 
-No window needed — the same simulation, scripted:
+Lab Streaming Layer is the open-source standard for synchronising data from many devices and programs. SHaSTA's paper builds its data recording on it.
+
+::: {.cards .cols-3}
+::: {.card}
+[One stream per source]{.card-title}
+Each device or program publishes a stream: EEG, an eye tracker, event markers.
+:::
+::: {.card}
+[One clock]{.card-title}
+Every sample is time-stamped on a shared clock, so streams line up without extra cleaning.
+:::
+::: {.card}
+[One recording]{.card-title}
+A recorder such as LabRecorder saves every stream together for analysis.
+:::
+:::
+
+In the paper's study, 20 participants commanded 3 UAV and 3 UGV platoons while EEG, eye tracking and game events were recorded through LSL. A session looks like this:
+
+::: {.loop-grid .short}
+::: {.loop-step}
+[1]{.loop-number}[Start streams]{.loop-title}
+
+Start each device's LSL stream.
+:::
+::: {.loop-step}
+[2]{.loop-number}[Run]{.loop-title}
+
+Run the scenario: the interface, or your own operator.
+:::
+::: {.loop-step}
+[3]{.loop-number}[Record]{.loop-title}
+
+Record every stream in one file, then analyse.
+:::
+:::
+
+## Log the Operator, See It on the [Clock]{.accent}
 
 ```python
-from shasta.actors import UAV, UGV
-from shasta.config import load_config
-from shasta.env import ShastaEnv
-from shasta.experiments import GoToNodeExperiment
+from pylsl import StreamInfo, StreamOutlet
+info = StreamInfo("ShastaEvents", "Markers", 1, 0, "string", "shasta-demo")
+outlet = StreamOutlet(info)          # any LSL recorder on the network can see it
 
-config = load_config(headless=True)
-config['experiment']['type'] = GoToNodeExperiment
+sent = 0
+def flush_events():                  # call after every commander.update()
+    global sent
+    for _, text in commander.events[sent:]:
+        outlet.push_sample([text])   # time-stamped on LSL's clock
+    sent = len(commander.events)
+```
 
-groups = {0: [UAV() for _ in range(4)],   # group 0: four drones
-          1: [UGV() for _ in range(3)]}   # group 1: three ground vehicles
-
-env = ShastaEnv(config, groups)
-obs, info = env.reset()
-
-obs, reward, terminated, truncated, info = env.step({0: 5, 1: 5})
-while not terminated:
-    obs, reward, terminated, truncated, info = env.step(None)
-env.close()
+```
+# what a recorder receives
+  LSL time (s)  event
+   1584705.990  Group 0 ordered to node 78
+   1584706.233  Target 78 reached by group 0
+   1584706.544  Mission complete in 1410 steps
 ```
 
 ::: {.checkpoint}
-**Verified in this tutorial** — this exact snippet runs end to end. `obs[0].shape` is `(4, 3)`: four UAVs, an (x, y, z) position each.
+**Not in `ihuman-shasta` yet** — the paper's pattern around `SwarmCommander`. Tested script: `labs/lsl_markers.py`.
 :::
 
 ## Four Things That Will [Trip You Up]{.accent}
@@ -475,7 +470,7 @@ If one group finishes well before another, continuing to call `env.step(None)` c
 
 ## Build Your Own [Experiment]{.accent}
 
-Subclass `shasta.base_experiment.BaseExperiment` and implement four methods:
+Subclass `shasta.base_experiment.BaseExperiment` and implement the methods:
 
 ```python
 class FlyNorthExperiment(BaseExperiment):
@@ -487,32 +482,34 @@ class FlyNorthExperiment(BaseExperiment):
     def compute_reward(self, observation, core): ...   # optional
 ```
 
-See `labs/custom_experiment.py` for a complete, tested 70-line version — every actor in every group flies north for 300 steps, nothing more.
+Where to start:
 
-## The [Path from Here]{.accent}
+::: {.cards .cols-4}
+::: {.card}
+[Scripted operator]{.card-title}
+`labs/human_loop.py`
+:::
+::: {.card}
+[LSL markers]{.card-title}
+`labs/lsl_markers.py`
+:::
+::: {.card}
+[Smallest experiment]{.card-title}
+`labs/custom_experiment.py`
+:::
+::: {.card}
+[Human-facing layer]{.card-title}
+`shasta/interaction.py`
+:::
+:::
 
-::: {.flow-diagram}
-::: {.flow-step}
-**`labs/play.py`** — the mission from Part Two, with an EDIT ME block (map, group sizes, target)
-:::
-::: {.flow-step}
-**`labs/custom_experiment.py`** — the minimal `BaseExperiment` subclass
-:::
-::: {.flow-step}
-**`shasta/experiments.py`** — `GoToNodeExperiment`, the real one, ~40 lines
-:::
-::: {.flow-step}
-**`shasta/primitives.py`** — reusable behaviors: `Formation`, `PathPlanning`
-:::
-:::
-
-Building a map of your own campus or study site: `shasta fetch-osm` + `shasta build-map` (needs Java; not exercised in this tutorial — see the main `README.md`).
+A map of your own study site: `shasta fetch-osm` + `shasta build-map` (needs Java; not exercised here — see the main `README.md`).
 
 ## {background-image="assets/background.jpg" background-opacity="0.25"}
 
 <!-- Closing slide: logo, thank-you, contact. Keep this as your last slide. -->
 
-::: {style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:80vh; text-align:center;"}
+::: {style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:576px; text-align:center;"}
 
 ![](assets/logo.png){style="max-height:110px; border-radius:0 !important; box-shadow:none !important;"}
 

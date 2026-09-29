@@ -22,6 +22,12 @@ pip install -e ".[gui]"
 
 `[gui]` adds the human interface (`shasta gui`) on top of the core simulator.
 
+Part 4 also uses Lab Streaming Layer. Install its Python package in the same environment (optional, but needed if you want to run `labs/lsl_markers.py` during the session):
+
+```bash
+pip install pylsl
+```
+
 ## Verify it worked
 
 ```bash

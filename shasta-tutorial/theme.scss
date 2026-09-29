@@ -1014,3 +1014,26 @@ $heading-font: "Rubik", sans-serif !default;
 .loop-grid.cols-4 { margin-top: 1.4rem; }
 .loop-grid.cols-4 .loop-step { min-height: 210px; }
 .loop-grid.cols-4 + .band { margin-top: 1.6rem; }
+
+/* Fixed card-grid column counts — ::: {.cards .cols-3} / {.cards .cols-4}. */
+.cards.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cards.cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* Bigger cards for slides that carry only a few — ::: {.cards .cols-4 .big} */
+.cards.big { gap: 1rem; margin-top: 1.4rem; }
+.cards.big .card { padding: 1rem 1.1rem; min-height: 250px; }
+.cards.big .card-title { font-size: 1.05em; margin-bottom: 0.5rem; }
+.cards.big .card p { font-size: 0.9em; line-height: 1.5; }
+.cards.big + .band { margin-top: 1.6rem; }
+.loop-grid.cols-4 .loop-step { min-height: 250px; }
+
+/* Inline code on the light card surface: darker accent for contrast, allowed to wrap */
+.card code {
+    color: #b4461a;
+    overflow-wrap: anywhere;
+}
+
+/* Compact loop rows for slides that also carry other content. */
+.loop-grid.short { margin-top: 0.6rem; }
+.loop-grid.short .loop-step,
+.loop-grid.cols-4.short .loop-step { min-height: 110px; }
