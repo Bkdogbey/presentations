@@ -6,7 +6,7 @@
 #               quarto preview shasta-tutorial.qmd   (live-reload while editing)
 title: "SHaSTA<span class='title-fullname'>Simulator for Human And Swarm<br>[Team Applications]{.accent}</span>"
 subtitle: "<span class='title-tagline'>A hands-on tutorial: putting a human in the loop with a swarm</span>"
-author: "Hemanth Manjunatha"
+author: "<span class='event-tag'>IEEE SMC 2026</span><br>Hemanth Manjunatha"
 institute: "Oklahoma State University · University at Buffalo"
 date: "2026-09-29"
 description: "A hands-on introduction to SHaSTA for human–swarm interaction research: put a human in the loop, log what they do with LSL, and write your own experiment."
@@ -26,6 +26,20 @@ format:
     navigation-mode: linear
     controls: true
     progress: true
+    include-after-body:
+      text: |
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          var titleSlide = document.getElementById('title-slide');
+          if (!titleSlide) return;
+          var row = document.createElement('div');
+          row.style.cssText = 'position:absolute; top:528px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:14px;';
+          row.innerHTML =
+            '<img src="assets/osu-logo.png" alt="Oklahoma State University" style="max-height:75px; width:auto; border-radius:0; box-shadow:none;">' +
+            '<img src="assets/ub-logo.png" alt="University at Buffalo" style="max-height:75px; width:auto; border-radius:0; box-shadow:none;">';
+          titleSlide.appendChild(row);
+        });
+        </script>
 title-slide-attributes:
   data-background-image: assets/world-angled.png
   data-background-opacity: "0.35"
@@ -505,24 +519,25 @@ Where to start:
 
 A map of your own study site: `shasta fetch-osm` + `shasta build-map` (needs Java; not exercised here — see the main `README.md`).
 
-## {background-image="assets/background.jpg" background-opacity="0.25"}
+## { background-opacity="0.25"}
 
 <!-- Closing slide: logo, thank-you, contact. Keep this as your last slide. -->
 
 ::: {style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:576px; text-align:center;"}
 
-![](assets/logo.png){style="max-height:110px; border-radius:0 !important; box-shadow:none !important;"}
+![](assets/osu-logo.png){style="max-height:110px; border-radius:0 !important; box-shadow:none !important;"}
+![](assets/ub-logo.png){style="max-height:110px; border-radius:0 !important; box-shadow:none !important;"}
 
 ::: {style="font-family:'Rubik',sans-serif; font-size:2.8rem; font-weight:900; color:#ffffff; margin-top:0.8rem;"}
 Thanks!
 :::
 
 ::: {style="font-size:1.5rem; color:#EC672C; margin-top:1.2rem; font-weight:700;"}
-Questions? See the SHaSTA repository README.
-:::
+![](assets/qr-code.png){style="max-height:150px; border-radius:0 !important; box-shadow:none !important;"}
 
-::: {style="font-size:1.5rem; color:rgba(255,255,255,0.35); margin-top:1rem; letter-spacing:2px;"}
-your.name@okstate.edu
+Questions? See the SHaSTA repository README.
+
+ehsanesf@buffalo.edu  & hemanth.manjunatha@okstate.edu
 :::
 
 :::

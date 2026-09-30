@@ -139,6 +139,16 @@ $heading-font: "Rubik", sans-serif !default;
         margin-top: 1.5em;
     }
 
+    .event-tag {
+        display: inline-block;
+        color: $primary-color;
+        font-weight: 700;
+        font-size: 0.75em;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 0.3em;
+    }
+
     .institute,
     .date {
         color: rgba(255,255,255,0.45);
@@ -893,6 +903,22 @@ $heading-font: "Rubik", sans-serif !default;
     font-size: 0.66em;
     line-height: 1.4;
     color: rgba(255,255,255,0.75);
+}
+
+/* Two-column layout — ::: {.columns} containing ::: {.column width="..."} fenced divs.
+   Keep the columns side by side (flex row) but flush at the top; flex: 0 0 auto keeps
+   each column at exactly the width Quarto set inline, so nothing shrinks or wraps. */
+.columns {
+    display: flex;
+    align-items: flex-start;
+}
+
+.columns > .column {
+    flex: 0 0 auto;
+}
+
+.columns > .column > *:first-child {
+    margin-top: 0;
 }
 
 
