@@ -219,7 +219,7 @@ Researchers need to vary information access, uncertainty, time pressure, and the
 ::: {.need-text}
 [02]{.need-index}
 
-[A controllable AI teammate]{.need-title}
+[A customizable AI teammate]{.need-title}
 
 Researchers need to vary what the AI knows, how reliable it is, and when and how it communicates.
 :::
@@ -254,7 +254,7 @@ Task events, human actions, AI advice, physiological signals, and sensor measure
 
 ::: {.notes}
 To study the interaction over time, researchers need an interactive task, a
-controllable teammate, conditions they can vary, and synchronized data. The
+customizable teammate, conditions they can vary, and synchronized data. The
 next slide shows how MOSAIC brings them together.
 :::
 
@@ -280,7 +280,7 @@ MOSAIC is a modular testbed for human–AI teaming research. Configure its compo
 
 [Interactive task]{.need-title}
 
-Search and rescue, move by move
+Search and rescue, one decision at a time
 :::
 :::
 
@@ -294,7 +294,7 @@ Search and rescue, move by move
 
 [Configurable conditions]{.need-title}
 
-Map, hazards, view, and scoring
+Map, view, timing, and scoring per study
 :::
 :::
 
@@ -323,9 +323,9 @@ Map, hazards, view, and scoring
 ::: {.need-text}
 [02]{.need-index}
 
-[Controllable AI teammate]{.need-title}
+[Customizable AI teammate]{.need-title}
 
-Scripted and LLM teammates, one interface
+Scripted or LLM, with behavior you set
 :::
 :::
 
@@ -350,7 +350,7 @@ Scripted and LLM teammates, one interface
 
 [Synchronized data]{.need-title}
 
-Task, advice, and sensors on one timeline
+Actions, advice, and signals on one clock
 :::
 :::
 
@@ -368,7 +368,7 @@ open-source Python platform for studying human–AI teaming through configurable
 tasks, built on MiniGrid. Like a mosaic
 built from tiles, it assembles separate parts (task, teammate, interface, sensing)
 into one study. Each box answers the need in the same position on the last slide:
-the task, a teammate you can control, conditions you set per study, and one
+the task, a teammate you can customize, conditions you set per study, and one
 synchronized record. Modular: the environment, AI teammate, interface, sensing,
 and analytics are separate components, so you replace one without touching the
 others. Configurable: map, hazards, view, scoring, and the teammate are set per
@@ -613,6 +613,15 @@ Next, we will install MOSAIC, launch a mission, and change the task ourselves.
 ::: {.you-are-here}
 [Why]{.stop} [Install]{.stop .here} [Experience]{.stop} [Configure]{.stop}
 :::
+
+::: {.qr-card}
+![](assets/qr-notebook.png){fig-alt="QR code that opens the tutorial's Jupyter server"}
+
+[Companion notebook]{.qr-title}
+[On the tutorial server: every setup command to copy, and the mission with nothing to install]{.qr-line}
+[Sign in with your password, then open `02_mosaic_human_ai.ipynb`]{.qr-line}
+[jupyter.ihuman-lab.work]{.qr-url}
+:::
 :::
 
 ---
@@ -666,7 +675,7 @@ Check four things on your laptop before installing.
 [Study tools]{.dep-group-name}
 
 ::: {.dep-grid}
-[pandas]{.dep} [pyyaml]{.dep} [python-dotenv]{.dep} [tabulate]{.dep}
+[pandas]{.dep} [pyyaml]{.dep} [python-dotenv]{.dep}
 :::
 :::
 :::
@@ -676,6 +685,10 @@ Check four things on your laptop before installing.
 
 ::: {.punchline}
 Nothing to install by hand: the next two slides [set everything up]{.accent}.
+:::
+
+::: {.fig-note}
+No install, or prefer to copy and paste? The companion notebook is on the tutorial server: `jupyter.ihuman-lab.work`
 :::
 
 ---
@@ -764,7 +777,7 @@ script. Everyone stays in the mosaic directory for the rest of the tutorial.
 ## Install [MOSAIC]{.accent}
 
 ::: {.hook}
-Three commands, run from the `mosaic` folder with `mosaic_env` active.
+Five commands, run from the `mosaic` folder with `mosaic_env` active.
 :::
 
 :::: {.columns .install-split}
@@ -773,11 +786,13 @@ Three commands, run from the `mosaic` folder with `mosaic_env` active.
 ```bash
 python -m pip install --upgrade pip
 python -m pip install -e .
+python -m pip uninstall -y pygame
+python -m pip install --force-reinstall "pygame-ce>=2.5.2"
 python -c "import mosaic.sar.env, mosaic.gui.main; print('MOSAIC ready')"
 ```
 
 ::: {.checkpoint}
-pip ends with `Successfully installed ... mosaic-0.1.0`, and the check prints a `pygame-ce` banner, then `MOSAIC ready`.
+The check prints a `pygame-ce` banner, then `MOSAIC ready`. If it says `cannot import name 'DIRECTION_LTR'`, rerun lines 3 and 4.
 :::
 :::
 
@@ -786,22 +801,38 @@ pip ends with `Successfully installed ... mosaic-0.1.0`, and the check prints a 
 ::: {.line-step}
 [1]{.line-num} [Update pip]{.line-title}
 
-Avoids install errors from an old installer
+Avoids old-installer errors
 :::
 ::: {.line-step}
 [2]{.line-num} [Install MOSAIC]{.line-title}
 
-Adds MOSAIC and every package on the previous slide. `-e` (editable) means your edits take effect without reinstalling; Part Four relies on this.
+`-e` means your Part Four edits apply without reinstalling
 :::
 ::: {.line-step}
-[3]{.line-num} [Check it]{.line-title}
+[3–4]{.line-num style="width: auto; padding-right: 0.5em;"} [Switch to pygame-ce]{.line-title}
 
-Imports the task (`mosaic.sar`) and the participant's interface (`mosaic.gui`)
+The interface needs it; plain `pygame` hides it
+:::
+::: {.line-step}
+[5]{.line-num} [Check it]{.line-title}
+
+Imports the task and the interface
 :::
 :::
 :::
 
 ::::
+
+::: {.notes}
+Lines 3 and 4 work around a packaging gap: MOSAIC's `pyproject.toml` declares
+`pygame`, but `pygame_gui` needs `pygame-ce`, and both install into the same
+`pygame` folder. Skipping them ends in `ImportError: cannot import name
+'DIRECTION_LTR' from 'pygame'` (reproduced on a clean clone of iHuman-Lab/mosaic
+main, 1018587, Python 3.11). `--force-reinstall` is required: uninstalling
+`pygame` deletes files `pygame-ce` shares. `pip check` then reports "mosaic
+0.1.0 requires pygame"; that is harmless. Once upstream depends on `pygame-ce`
+the two lines do nothing harmful and can come off the slide.
+:::
 
 ---
 
@@ -890,6 +921,7 @@ It stays open for Part Three
 
 | Symptom | Recovery |
 |---|---|
+| `cannot import name 'DIRECTION_LTR'` | Rerun install lines 3 and 4 (`pygame-ce`) |
 | `No module named 'mosaic'` | Activate `mosaic_env`, rerun `pip install -e .` |
 | `No module named 'experiment'` | Run from the repo root with `PYTHONPATH=src` |
 | `python --version` shows 3.9 or older, or 3.12 and newer | Recreate `mosaic_env` with Python 3.10 or 3.11 |
@@ -961,7 +993,9 @@ Every choice has [a consequence you can see and score]{.accent}.
 ::: {.notes}
 No code in this part: the goal is to know the mission the way a participant
 does. The clip is the real interface: a real victim (green flash, +1), a decoy
-(red flash, -1), then another real victim.
+(red flash, -1), then another real victim. In today's run the clock only counts
+down: at 0:00 the timer stops and the mission keeps going (appendix slide "Time
+Limit"); the lab's study runner is what ends a trial.
 :::
 
 ---
@@ -1204,6 +1238,26 @@ dummy teammate, so Alt replies "Currently, no commands are available."
 
 ---
 
+<!-- ============ BREAK ============ -->
+
+::: {.divider}
+[Break · 15 minutes]{.divider-kicker}
+
+[Take a Break]{.divider-title}
+
+[Next · Part Four: Configure MOSAIC]{.divider-path}
+:::
+
+::: {.notes}
+Fifteen minutes. Leave this slide up for the whole break. Helpers use the time to finish any
+install that is still stuck. Before starting Part Four, check that everyone can
+move the agent; anyone who closed the game relaunches it with the command on
+"Run the Included Mission". Part Four edits the file that window was launched
+from, so the game has to be working first.
+:::
+
+---
+
 <!-- ============ PART 4 ============ -->
 
 ::: {.divider}
@@ -1215,6 +1269,15 @@ dummy teammate, so Alt replies "Currently, no commands are available."
 
 ::: {.you-are-here}
 [Why]{.stop} [Install]{.stop} [Experience]{.stop} [Configure]{.stop .here}
+:::
+
+::: {.qr-card}
+![](assets/qr-notebook.png){fig-alt="QR code that opens the tutorial's Jupyter server"}
+
+[Companion notebook]{.qr-title}
+[On the tutorial server: every change in this part, as the edit and as a cell you can run]{.qr-line}
+[Sign in with your password, then open `02_mosaic_human_ai.ipynb`]{.qr-line}
+[jupyter.ihuman-lab.work]{.qr-url}
 :::
 :::
 
@@ -1426,8 +1489,11 @@ section of Part Four, in this order: SAR (the building, what fills it, the
 camera), GUI (the window), LLM (who answers `Alt`), and Sensing (what every
 step records). Rewards are a keyword argument you add to the SAR call. This is
 main.py as the tutorial needs it: imports enabled and the provider defaulting
-to "dummy". Upstream MOSAIC must carry that fix before the session
-(iHuman-Lab/mosaic main, c571f94, still defaults the provider to "openai").
+to "dummy". Upstream MOSAIC must carry that default before the session
+(iHuman-Lab/mosaic main, 1018587, has the imports but still defaults the
+provider to "openai", so `Alt` replies "Import tabulate failed"). If it has not
+landed, have everyone add `provider: dummy` as a top-level line in
+`configs/experiment.yaml` before Part Three.
 :::
 
 ---
@@ -1439,7 +1505,7 @@ to "dummy". Upstream MOSAIC must carry that fix before the session
 :::
 
 ::: {.task-what}
-Lines 31–44 build the search-and-rescue task.
+Lines 31–44 build the task. Notebook: `notebooks/02_mosaic_human_ai.ipynb`
 :::
 
 :::: {.section-grid}
@@ -1501,9 +1567,13 @@ YAML counts · `num_rows` · `locked_room_prob`
 ::: {.notes}
 Lines 31–44 are the whole SAR task: building size, the placers that fill it, and
 the camera. Counts are per room (12 real victims across a 3×3 building is 108).
-The building settings are cells in the notebook; the camera and rewards get the
-next two slides. Code lives in src/mosaic/sar/, src/mosaic/core/, and
-src/experiment/placers.py.
+The building settings are Step 6 of the notebook, which is in the repository
+attendees cloned (notebooks/02_mosaic_human_ai.ipynb; it also needs matplotlib,
+scipy, pylsl, and pyxdf). Its own small building has no decoys; its
+`make_mission()` mirrors these lines and has them, and the notebook also shows
+the three cameras (Step 2) and the reward change (Step 6). The camera and
+rewards get the next two slides. Code lives in
+src/mosaic/sar/, src/mosaic/core/, and src/experiment/placers.py.
 :::
 
 ---
@@ -1788,7 +1858,7 @@ Lines 47–49 pick the AI teammate. Today it is the `dummy` placeholder.
 :::
 
 ::: {.knob-card .live}
-[2]{.knob-num} [Real LLM]{.knob-name} [Demo]{.change-when}
+[2]{.knob-num} [Real LLM]{.knob-name} [On your own]{.change-when}
 
 `provider:` in the YAML, key in `.env`
 
@@ -1876,8 +1946,8 @@ mosaic-tutorial/labs/). Any teammate implements one method of `LLMClient`,
 `query(prompt) -> str` (src/mosaic/llm/client.py). At 0.7, about three replies
 in ten point at a decoy: ask the room whether anyone noticed. That is the
 reliance question from the start of the tutorial. The "after" image was
-captured at reliability 1.0. It is also the fallback for the LLM demo if the
-API is down: grounded advice, no key.
+captured at reliability 1.0. No API key is used in this session, so this is the
+one teammate attendees see give grounded advice.
 :::
 
 ---
@@ -1889,7 +1959,7 @@ API is down: grounded advice, no key.
 :::
 
 ::: {.task-what}
-[Presenter demo]{.mode-tag} One package, one key, two lines of YAML.
+[On your own]{.mode-tag} With your own key: two packages, one key, two lines of YAML.
 :::
 
 :::: {.task-split}
@@ -1899,7 +1969,7 @@ API is down: grounded advice, no key.
 [terminal]{.code-file} [once, with `mosaic_env` active]{.code-where}
 
 ```{.bash code-line-numbers="false"}
-python -m pip install llama-index-llms-openai
+python -m pip install llama-index-llms-openai tabulate
 ```
 :::
 
@@ -1944,13 +2014,16 @@ OPENAI_API_KEY=<your key>
 ::::
 
 ::: {.notes}
-Presenter demo: the key lives only in the presenter's `.env`. It is never in the
-repository or this deck, which is public on GitHub Pages. `main.py` already reads
-`provider` and `model` from the top of the YAML and loads `.env`
-(`load_dotenv()`); `build_llm_client` connects on the first `Alt`, not at launch,
-so no key or a typo shows as an error in the chat and the game keeps running.
-Model: confirm on key day by measured latency; the package must recognize the
-model name. What the model is told is on the appendix slide "What the Teammate
+Not run live: no API key is used in this session. Walk through the three cards
+so attendees can do it afterwards with their own key, then reveal how the reply
+is produced. A key belongs only in a local `.env`, never in a repository.
+`main.py` already reads `provider` and `model` from the top of the YAML and
+loads `.env` (`load_dotenv()`); `build_llm_client` connects on the first `Alt`,
+not at launch, so no key or a typo shows as an error in the chat and the game
+keeps running. The model name must be one the package recognizes.
+`tabulate` builds the prompt's table (`DataFrame.to_markdown()`);
+MOSAIC does not declare it yet, and without it `Alt` replies "Import tabulate
+failed". What the model is told is on the appendix slide "What the Teammate
 Is Told".
 :::
 
@@ -1983,7 +2056,7 @@ obs → agent_x, agent_y, direction, grid,
       saved_victims, remaining_victims,
       victim_health, step_count, …
     + action, reward, llm_response
-    → study runner: one JSON line per step on LSL
+    → study runner: one JSON line per frame on LSL
 ```
 :::
 :::
@@ -2021,8 +2094,9 @@ obs → agent_x, agent_y, direction, grid,
 
 ::: {.notes}
 Observations are built in src/mosaic/sar/observations.py; the study runner is
-in src/experiment/. `read_data()` is in src/experiment/game.py (lines 111–124,
-`SARGameTrial`). Change what each step records by subclassing
+in src/experiment/. `read_data()` is in src/experiment/game.py (lines 108–124,
+`SARGameTrial`). The notebook (notebooks/02_mosaic_human_ai.ipynb) prints the
+fields in Step 4 and records them with gaze in Steps 8–9. Change what each step records by subclassing
 `ObservationProcessor` and passing it as `observation=`. `replay.py` plays a
 recording back. The full study runner needs the lab's `ixp` package and LSL,
 which this tutorial does not install.
@@ -2044,17 +2118,17 @@ which this tutorial does not install.
 
 ::: {.task-col}
 ::: {.code-card}
-[`src/experiment/experiment.py`]{.code-file} [the study runner]{.code-where}
+[`src/experiment/eye_demo.py`]{.code-file} [the study runner]{.code-where}
 
 ```{.diff code-line-numbers="false"}
      experiment = Experiment(config)
 +    experiment.register_sensor(
 +        name="TobiiEyeTracker", sensor_cls=TobiiEyeTracker,
-+        sensor_config={"config": {}})
++        sensor_config={})
 +    experiment.calibrate_sensor(
 +        "TobiiEyeTracker", screen=config["display"],
 +        fullscreen=config["fullscreen"])
-     experiment.add_task(name="main_game", task_cls=SARGame, ...)
+     experiment.add_task(task_cls=SARGameDemo, ...)
 ```
 :::
 
@@ -2070,11 +2144,11 @@ which this tutorial does not install.
 :::
 
 ::: {.watch-item}
-[2]{.watch-num} [Play]{.watch-title} A short mission, advice on `Alt`
+[2]{.watch-num} [Play]{.watch-title} A short mission
 :::
 
 ::: {.watch-item .fragment}
-[3]{.watch-num} [Two streams, one clock]{.watch-title} `TobiiEyeTracker` (60 Hz) and the game steps, side by side in LabRecorder
+[3]{.watch-num} [Two streams, one clock]{.watch-title} `TobiiEyeTracker` (gaze, 60 Hz) and `SARGame` (game state, every frame), side by side in LabRecorder
 :::
 :::
 :::
@@ -2083,20 +2157,24 @@ which this tutorial does not install.
 
 ::: {.notes}
 Presenter only: the lab's `ixp` package (not on PyPI), `tobii_research`,
-PsychoPy, pylsl, ray, and LabRecorder, set up at rehearsal (RUNSHEET.md). The
-two calls are the ones the full study block uses (experiment.py lines 83–88);
-the `tobii_test` block in the same file is the sensor-only version. Calibration
-is five points (center and four at 0.2 from the edges); SPACE accepts, R redoes.
+PsychoPy, pylsl, ray, and LabRecorder. Machine setup and the rehearsed steps
+are in EYETRACKER_SETUP.md. Run `PYTHONPATH=src python -m experiment.eye_demo`
+from the `mosaic` folder. The two calls on the slide are the same ones the
+lab's full study uses (experiment.py); `eye_demo.py` adds them to a single
+two-minute mission with the keyless teammate, so no API key is used and the
+study files are not edited. Seat the volunteer 60 to 65 cm from the screen.
+Calibration is five points (center and four at 0.2 from the edges): look at
+each dot until it disappears; SPACE accepts, R redoes. `Esc` ends the mission.
 Reveal the third item once LabRecorder is on screen: TobiiEyeTracker is gaze at
-60 Hz, 9 channels; the game trial is one JSON line per step. Gaze and game land
-on one clock, so you can see where the volunteer looked before and after
-advice. If the device fails, show the rehearsal screenshot of LabRecorder's
-stream list and move on.
+60 Hz, 9 channels; SARGame is one JSON state per frame, about 30 a second. Gaze
+and game land on one clock, so you can see where the volunteer looked before
+and after each rescue; notebook Step 9 reads the saved recording. If the device
+fails, go to the next slide, which shows the rehearsal recording.
 :::
 
 ---
 
-## The Synchronized [Record]{.accent} {visibility="hidden"}
+## The Synchronized [Record]{.accent}
 
 ::: {.custom-strip}
 [Map]{.stop} [4.1 SAR]{.stop} [4.2 GUI]{.stop} [4.3 LLM]{.stop} [4.4 Sensing]{.stop .here}
@@ -2105,11 +2183,10 @@ stream list and move on.
 :::: {.task-split}
 
 ::: {.task-col}
-[Observe]{.task-label} [one recording, one clock]{.src-cap}
+[One recorded mission]{.task-label} [gaze and game on the same clock]{.src-cap}
 
-::: {.placeholder}
-Timeline from the rehearsal recording goes here: gaze position over time, with
-markers for advice requests, advice replies, actions, and rescues.
+::: {.result-img}
+![](assets/results/gaze-record.png){fig-alt="Fixations drawn on the screen's three areas, almost all on the game view, above a timeline of three rescues and a strip showing the gaze stayed on the game view, with gaps where the tracker lost the eyes."}
 :::
 :::
 
@@ -2118,13 +2195,13 @@ markers for advice requests, advice replies, actions, and rescues.
 
 ::: {.feature-list}
 ::: {.feature-row}
-[After advice]{.feature-name} Where does gaze go in the second after the reply appears?
+[Where]{.feature-name} Which part of the screen holds the gaze?
 :::
 ::: {.feature-row}
-[Reliance]{.feature-name} Does the next action follow the advice?
+[When]{.feature-name} What do the eyes do in the second after a rescue?
 :::
 ::: {.feature-row}
-[Mistakes]{.feature-name} What did the participant look at before rescuing a decoy?
+[Advice]{.feature-name} Where does gaze go when the teammate replies?
 :::
 :::
 :::
@@ -2132,13 +2209,22 @@ markers for advice requests, advice replies, actions, and rescues.
 ::::
 
 ::: {.punchline}
-With one eye tracker in the room, everyone inspects [the same prepared recording]{.accent}.
+Gaze and game share one clock, so [every look lines up with what happened]{.accent}.
 :::
 
 ::: {.notes}
-Hidden until it is real. TODO after rehearsal: record a short session with the Tobii and LabRecorder,
-then generate the aligned timeline from that recording and replace the
-placeholder.
+The figure is real: tools/make_gaze_figure.py drew it from the rehearsal
+recording, the LabRecorder file of the slide 33 demo, with the same code as
+notebook Step 9. Top: each circle is a fixation, bigger for longer, on the
+screen's three areas. Bottom: one clock, the victims saved and under it the
+area the gaze was in; dark gaps are moments the tracker lost the eyes. In this
+recording the gaze stayed on the game view (99%) and did not go to the info
+panel after any of the three rescues. The three rows are the questions a
+researcher asks of a record like this. Say that the third needs a real LLM
+teammate: this mission ran with the keyless one, so it has no advice in it. This slide is also the fallback: if the tracker fails, skip the
+live demo and show this. Rehearsal calibration was rough, so the gaze sits low
+on the screen; after the venue rehearsal redraw it with
+`python tools/make_gaze_figure.py <recording.xdf>` and render again.
 :::
 
 ---
@@ -2273,6 +2359,67 @@ the four parts of Part Four.
 
 ---
 
+## MOSAIC in a [Study]{.accent}
+
+::: {.hook}
+What you configured today, put to work in a study of people and an LLM teammate.
+:::
+
+:::: {.task-split}
+
+::: {.task-col}
+[LLM-Mediated Human-AI Interaction in Search and Rescue: Impact of Expertise on Attentional Allocation]{.paper-title}
+[Elahe Oveisi · Hemanth Manjunatha]{.paper-authors}
+
+::: {.feature-list}
+::: {.feature-row}
+[Task]{.feature-name} The search-and-rescue mission, with victims whose health runs down.
+:::
+::: {.feature-row}
+[Teammate]{.feature-name} Two LLM teammates and a no-LLM baseline, three trials per participant.
+:::
+::: {.feature-row}
+[Sensing]{.feature-name} A Tobii eye tracker and the game on one clock, through LSL.
+:::
+::: {.feature-row}
+[Question]{.feature-name} Does guidance change where people look, and does expertise matter?
+:::
+:::
+:::
+
+::: {.result-col}
+::: {.qr-card .qr-stack}
+![](assets/qr-paper.png){fig-alt="QR code that opens the slides of the paper's talk"}
+
+[Monday, October 5 · 14:00–14:15]{.qr-title}
+[Grand C · Session MoA10]{.qr-line}
+[Scan for the talk's slides]{.qr-line}
+:::
+:::
+
+::::
+
+::: {.punchline}
+Come and hear what they found: [Monday at 14:00, Grand C]{.accent}.
+:::
+
+::: {.notes}
+An invitation, and an application of what attendees just configured: say what
+the study did, and leave the results for the talk. Paper MoA10.3 in the regular
+session Decision Support System I, Monday October 5, 14:00 to 14:15, room
+Grand C. Thirteen participants each played three trials in random order: two
+with an LLM teammate and one no-LLM baseline, up to 15 minutes or 1,000 moves.
+Victim health deteriorates, and `Alt` asks for advice and reveals victim health
+for five seconds. Gaze and pupil data came from a Tobii eye tracker, on one
+clock with the game through LSL: the same pieces as Part Four. Participants
+were grouped into experts and novices. The code opens the talk's slides
+(ihuman-lab.github.io/presentations/ieee-smc-eo/); the program entry is
+conf.papercept.net, SMC26 program, Monday, MoA10.3. Check the time and room
+against the final program on the day.
+:::
+
+---
+
 ## {background-image="assets/background.jpg" background-opacity="0.25"}
 
 ::: {.closing}
@@ -2342,8 +2489,9 @@ Set the chance that a room is locked: `0.5` locks about half, `0.9` most.
 ::::
 
 ::: {.notes}
-Keep locked_room_prob below 1.0: at 1.0 generation never finishes. Counts come
-from one generated building each and can differ run to run. `LockedRoomPlacer`
+Keep locked_room_prob below 1.0: at 1.0 generation never finishes. The count is
+`max(1, int(rooms × prob))`, so a 3×3 building always locks 4 rooms at 0.5 and
+8 at 0.9; which rooms changes run to run. `LockedRoomPlacer`
 lives in src/mosaic/sar/placers.py; its `place_all()` picks which rooms lock and
 hides each key in an unlocked room. Placement is a pluggable interface: `Placer`
 in src/mosaic/core/placers.py has one method, `place_all`.

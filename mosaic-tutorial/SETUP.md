@@ -87,13 +87,14 @@ shared `pygame` namespace that `pygame-ce` also owns; a plain
 `pip install pygame-ce` then reports "Requirement already satisfied" and repairs
 nothing.
 
-You will see `ERROR: mosaic 0.1.0 requires pygame, which is not installed.` —
+You may see `ERROR: mosaic 0.1.0 requires pygame, which is not installed.` —
 **expected and harmless.** That is `pyproject.toml` naming the wrong package;
 `pygame-ce` satisfies it in practice.
 
-`tabulate` is now declared in `pyproject.toml`, so `pip install -e .` brings it
-in. If a `Missing optional dependency 'tabulate'` error ever appears when you
-press `Alt`, install it directly:
+`tabulate` is the second gap: MOSAIC uses it to build the prompt for a real AI
+teammate but does not declare it yet. The core tutorial does not need it. If
+you plan to connect your own LLM, or `Alt` ever replies
+`Import tabulate failed`, install it directly:
 
 ```bash
 python -m pip install tabulate
@@ -183,6 +184,34 @@ The session uses two small files from the tutorial repository: `advisor.py`
 <https://github.com/iHuman-Lab/presentations/tree/main/mosaic-tutorial/labs>
 and save them into `src/experiment/` in your `mosaic` folder. The session shows
 where they go when you reach those slides.
+
+## 7 · Optional: the notebook
+
+`notebooks/02_mosaic_human_ai.ipynb` is the take-home companion to the
+session. It carries these install commands, shows each change the tutorial
+makes to `main.py` (camera, rewards, feedback flash, AI teammate) in a cell,
+lets you play the mission inside the notebook, and records game state together
+with (synthetic) eye gaze. The session points to it but does not depend on it.
+It draws off-screen, so it needs no window.
+
+Attendees can run it with nothing to install on the tutorial's Jupyter server,
+<https://jupyter.ihuman-lab.work>: sign in with your password and open
+`02_mosaic_human_ai.ipynb`. To run it on your own laptop instead:
+
+Save these two files into the `notebooks` folder, replacing the files of the
+same name:
+[02_mosaic_human_ai.ipynb](https://github.com/Bkdogbey/mosaic/raw/smc2026/notebooks/02_mosaic_human_ai.ipynb)
+and [lsl_tools.py](https://github.com/Bkdogbey/mosaic/raw/smc2026/notebooks/lsl_tools.py).
+Then add five packages and start Jupyter from the `notebooks` folder, because
+the notebook reads `config.yaml` from there:
+
+```bash
+python -m pip install matplotlib scipy pylsl pyxdf notebook
+cd notebooks
+python -m jupyter notebook 02_mosaic_human_ai.ipynb
+```
+
+If Jupyter asks for a kernel, choose **Python 3 (ipykernel)**.
 
 ## Troubleshooting
 
