@@ -45,7 +45,7 @@ Operators must locate and recover people while conditions change quickly.
 - Missions occur in **challenging environments**
 - Decisions must be made under **time pressure**
 - Need to [**quickly process information**]{.accent} from multiple sources and translate it into [**clear human commands**]{.accent} [^1^](#references){style="color:#ec672c; text-decoration:none;"}
-- LLMs provide **real-time, natural-language, context-aware guidance** that helps users interpret complex environments and make decisions under uncertainty
+- LLMs provide **natural-language guidance**
 
 :::
 ::: {.column width="53%"}
