@@ -1,0 +1,93 @@
+<style>
+.reveal .prompt-slide .prompt-cubes { display: flex; gap: 16px; align-items: stretch; }
+.reveal .prompt-slide .prompt-cube { flex: 1; background: #ffffff; border-radius: 10px; padding: 0.9rem 1.1rem; text-align: left; transition: box-shadow .35s, transform .35s; border: 3px solid transparent; }
+.reveal .prompt-slide .prompt-cube .card-title { color: #a63c12; }
+.reveal .prompt-slide .prompt-cube ul { margin: 0.3rem 0 0; padding-left: 1.1em; }
+.reveal .prompt-slide .prompt-cube li { color: #000000 !important; margin: 0.25rem 0; font-size: 0.62em; line-height: 1.3; font-weight: 400; transition: opacity .3s, font-weight .3s, color .3s; }
+.reveal .prompt-slide.tour-active .prompt-cube li { opacity: .35; }
+.reveal .prompt-slide.tour-active .prompt-cube li.is-active { opacity: 1; font-weight: 800; color: #000000 !important; }
+.reveal .prompt-slide.tour-active .prompt-cube.is-active { box-shadow: 0 0 0 3px #ec672c; transform: translateY(-3px); border-color: #ec672c; }
+.reveal .prompt-slide .prompt-tour { display: flex; align-items: center; gap: 8px; margin-top: 13px; text-align: left; }
+.reveal .prompt-slide .prompt-tour button { font: inherit; font-size: 15px; color: #fff; background: #383838; border: 1px solid #777; border-radius: 5px; padding: 6px 10px; cursor: pointer; white-space: nowrap; }
+.reveal .prompt-slide .prompt-tour button:hover, .reveal .prompt-slide .prompt-tour button:focus-visible { border-color: #ffb876; outline: 2px solid #ffb876; }
+.reveal .prompt-slide .prompt-tour [data-tour="play"] { background: #a63c12; min-width: 64px; }
+.reveal .prompt-slide .prompt-explanation { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal .prompt-slide .prompt-cube, .reveal .prompt-slide .prompt-cube li { transition: none; transform: none !important; }
+}
+@media print {
+  .reveal .prompt-slide .prompt-tour { display: none; }
+  .reveal .prompt-slide.tour-active .prompt-cube { box-shadow: none; transform: none; border-color: transparent; }
+  .reveal .prompt-slide.tour-active .prompt-cube li { opacity: 1; font-weight: 400; color: #4c286d !important; }
+}
+</style>
+<script>
+(() => {
+  function init() {
+    const slide = document.querySelector('.prompt-slide');
+    if (!slide || slide.dataset.tourReady) return;
+    slide.dataset.tourReady = 'true';
+    const cubes = [...slide.querySelectorAll('.prompt-cube')];
+    const labels = { style: 'Guidance Style', priority: 'Priority', rules: 'Mission Rules' };
+
+    // Build a row-major sequence: row 0 of every category, then row 1, then row 2.
+    const perCubeItems = cubes.map(cube => [...cube.querySelectorAll('li')]);
+    const rowCount = Math.max(...perCubeItems.map(items => items.length));
+    const steps = [];
+    for (let row = 0; row < rowCount; row++) {
+      cubes.forEach((cube, c) => {
+        const li = perCubeItems[c][row];
+        if (li) steps.push({ cube, li, row });
+      });
+    }
+
+    const caption = slide.querySelector('.prompt-explanation');
+    const play = slide.querySelector('[data-tour="play"]');
+    let index = -1;
+    let timer = null;
+    function pause() { clearTimeout(timer); timer = null; play.textContent = 'Play'; }
+    function show(next) {
+      index = next;
+      slide.classList.toggle('tour-active', index >= 0);
+      cubes.forEach(cube => cube.classList.toggle('is-active', index >= 0 && cube === steps[index].cube));
+      slide.querySelectorAll('.prompt-cube li').forEach(li => li.classList.remove('is-active'));
+      if (index >= 0) steps[index].li.classList.add('is-active');
+      caption.textContent = index < 0
+        ? 'Select Play to explore each part of the prompt.'
+        : `${index + 1}/${steps.length} · ${labels[steps[index].cube.dataset.category]} · row ${steps[index].row + 1}`;
+    }
+    function schedule() {
+      timer = setTimeout(() => {
+        if (index === steps.length - 1) { pause(); return; }
+        show(index + 1);
+        schedule();
+      }, 2600);
+    }
+    slide.querySelector('.prompt-tour').addEventListener('click', event => {
+      const button = event.target.closest('button');
+      if (!button) return;
+      event.stopPropagation();
+      const action = button.dataset.tour;
+      if (action === 'play') {
+        if (timer !== null) { pause(); return; }
+        if (index < 0 || index === steps.length - 1) show(0);
+        play.textContent = 'Pause';
+        schedule();
+      } else {
+        pause();
+        if (action === 'reset') show(-1);
+        if (action === 'next') show(Math.min(steps.length - 1, index + 1));
+        if (action === 'previous') show(Math.max(0, index - 1));
+      }
+    });
+    // Keep keyboard activation of controls from advancing the presentation.
+    slide.querySelector('.prompt-tour').addEventListener('keydown', event => {
+      if ([' ', 'Enter', 'ArrowLeft', 'ArrowRight'].includes(event.key)) event.stopPropagation();
+    });
+    if (window.Reveal) Reveal.on('slidechanged', pause);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>

@@ -1,0 +1,28 @@
+﻿outcome,effect,beta,q_table,model_scale
+Victims per step,LLM,0.02,<0.01,Victims per step
+Victims per step,Expertise,0.016,ns,Victims per step
+Victims per step,LLM × Expertise,-0.009,ns,Victims per step
+Total rewards,LLM,267.143,<0.01,Reward units
+Total rewards,Expertise,-17.714,ns,Reward units
+Total rewards,LLM × Expertise,181.857,ns,Reward units
+Saved victims,LLM,0.035,ns,Log count
+Saved victims,Expertise,0.221,ns,Log count
+Saved victims,LLM × Expertise,0.435,ns,Log count
+Fixation duration,LLM,-19.326,<0.01,Model units
+Fixation duration,Expertise,-26.475,ns,Model units
+Fixation duration,LLM × Expertise,17.059,ns,Model units
+Pupil-size SD,LLM,0.122,<0.0001,Model units
+Pupil-size SD,Expertise,-0.042,ns,Model units
+Pupil-size SD,LLM × Expertise,-0.051,<0.05,Model units
+Game-area fixation,LLM,-0.184,<0.0001,Model units
+Game-area fixation,Expertise,-0.015,ns,Model units
+Game-area fixation,LLM × Expertise,0.114,<0.01,Model units
+Chat-area fixation,LLM,0.092,<0.0001,Model units
+Chat-area fixation,Expertise,0.003,ns,Model units
+Chat-area fixation,LLM × Expertise,-0.045,ns,Model units
+Fixation count,LLM,0.248,ns,Log count
+Fixation count,Expertise,-0.201,ns,Log count
+Fixation count,LLM × Expertise,0.815,<0.05,Log count
+Saccade count,LLM,0.234,ns,Log count
+Saccade count,Expertise,-0.482,ns,Log count
+Saccade count,LLM × Expertise,0.961,<0.01,Log count
