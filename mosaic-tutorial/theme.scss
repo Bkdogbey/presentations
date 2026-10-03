@@ -2707,3 +2707,69 @@ $loop-gap: 84px;
 .pkg-row .pkg-card > p:last-child {
     margin-top: auto;
 }
+
+/* QR card: a scannable code with two or three lines beside it (.qr-stack: under it).
+   The code images are dark on white with their own quiet border; never invert them. */
+.qr-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.3rem;
+    margin-top: 2.4rem;
+    text-align: left;
+}
+.reveal .slides section .qr-card p {
+    margin: 0;
+}
+.reveal .slides section .qr-card img:not(.slide-logo img) {
+    display: block;
+    width: 190px;
+    height: 190px;
+    margin: 0;
+    border-radius: 6px;
+    box-shadow: none;
+}
+.qr-title {
+    display: block;
+    color: #ffffff;
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+.qr-line {
+    display: block;
+    margin-top: 0.3rem;
+    color: rgba(255,255,255,0.8);
+    font-size: 1.1rem;
+}
+.qr-url {
+    display: block;
+    margin-top: 0.5rem;
+    color: $primary-color;
+    font-family: var(--r-code-font, monospace);
+    font-size: 0.95rem;
+}
+.qr-card.qr-stack {
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 0.2rem;
+    text-align: center;
+}
+.reveal .slides section .qr-card.qr-stack img:not(.slide-logo img) {
+    width: 210px;
+    height: 210px;
+}
+
+/* MOSAIC in a Study: the paper's title and authors above its findings. */
+.paper-title {
+    display: block;
+    color: #ffffff;
+    font-size: 0.9em;
+    font-weight: 700;
+    line-height: 1.3;
+}
+.paper-authors {
+    display: block;
+    margin: 0.4rem 0 0.9rem;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.7em;
+}
