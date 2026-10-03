@@ -1,6 +1,6 @@
 # SHaSTA Tutorial
 
-Session 2 of **Closing the Human–AI Loop: Modular Architectures for Autonomous Teaming and Physiological Sensing**, a joint tutorial by Oklahoma State University and the University at Buffalo at IEEE SMC 2026. A hands-on introduction to [SHaSTA](https://doi.org/10.21203/rs.3.rs-4338790/v1) (Simulator for Human And Swarm Team Applications) for HCI and human-factors researchers, built on the iHuman Lab Quarto reveal.js template. Session 1, [`mosaic-tutorial`](../mosaic-tutorial/), is the sibling tutorial for MOSAIC.
+Session 2 of **Closing the Human–AI Loop: Modular Architectures for Autonomous Teaming and Physiological Sensing**, a joint tutorial by Oklahoma State University and the University at Buffalo at IEEE SMC 2026. A hands-on introduction to [SHaSTA](https://doi.org/10.21203/rs.3.rs-4338790/v1) (An Open-Source Simulator for Human and Swarm Team Applications) for HCI and human-factors researchers, built on the iHuman Lab Quarto reveal.js template. Session 1, [`mosaic-tutorial`](../mosaic-tutorial/), is the sibling tutorial for MOSAIC.
 
 The narrative thread is human–swarm interaction (HSI): SHaSTA is a pybullet-based testbed where an operator commands UAV and UGV groups that move in formation along real city street networks, and where the operator's actions can be recorded on one clock with physiological data. The deck never treats the swarm as the point; the person is.
 

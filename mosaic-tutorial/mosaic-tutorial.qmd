@@ -113,12 +113,12 @@ connect.
 
 ---
 
+## {background-image="assets/game-view.png" background-opacity="0.25"}
+
 ::: {.divider}
 [Session 1 · 8:30–10:30 AM]{.divider-kicker}
 
-[MOSAIC]{.divider-title}
-
-[Modular System for Adaptive Human–AI Collaboration]{.divider-subtitle}
+[[MOSAIC]{.accent}<br>Modular System for [Adaptive]{.accent} [Human–AI]{.accent} Collaboration]{.divider-title style="font-size:3.4rem; line-height:1.25;"}
 
 [A configurable testbed for human–AI teaming · github.com/iHuman-Lab/mosaic]{.divider-path}
 :::

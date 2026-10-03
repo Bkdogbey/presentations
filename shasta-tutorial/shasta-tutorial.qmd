@@ -98,12 +98,12 @@ connect.
 
 ---
 
+## {background-image="assets/world-angled.png" background-opacity="0.35"}
+
 ::: {.divider}
 [Session 2 · 11:00 AM–1:00 PM]{.divider-kicker}
 
-[SHaSTA]{.divider-title}
-
-[Simulator for Human And Swarm Team Applications]{.divider-subtitle}
+[[SHaSTA]{.accent}<br>An [Open-Source]{.accent} Simulator for [Human]{.accent} and [Swarm]{.accent} Team Applications]{.divider-title style="font-size:3.4rem; line-height:1.25;"}
 
 [A hands-on tutorial: putting a human in the loop with a swarm]{.divider-path}
 :::
@@ -246,7 +246,7 @@ SHaSTA is a testbed built around those four, with the human at the centre.
 
 ## What Is [SHaSTA]{.accent}
 
-**S**imulator for **H**uman **a**nd **S**warm **T**eam **A**pplications ([Manjunatha et al., 2024](https://doi.org/10.21203/rs.3.rs-4338790/v1)), a [pybullet](https://pybullet.org)-based simulator for studying how people command and work with swarms. Four components:
+An open-source **S**imulator for **H**uman **a**nd **S**warm **T**eam **A**pplications ([Manjunatha et al., 2024](https://doi.org/10.21203/rs.3.rs-4338790/v1)), a [pybullet](https://pybullet.org)-based simulator for studying how people command and work with swarms. Four components:
 
 ::: {.cards .cols-4}
 ::: {.card}
@@ -1150,15 +1150,15 @@ and `shasta build-map` (need Java; not exercised in this tutorial).
 
 ::: {.watch-list .discuss}
 ::: {.watch-item}
-[1]{.watch-num} [Your question]{.watch-title} What would you ask about a person commanding a swarm, and what would you change in the map, the mission or the number of vehicles to ask it?
+[1]{.watch-num} [Human–Swarm Teaming]{.watch-title} What human–swarm teaming question would you ask first, and what would you change in the map, the mission or the number of vehicles to ask it?
 :::
 
 ::: {.watch-item}
-[2]{.watch-num} [Human and autonomy]{.watch-title} Which decisions should the person keep and which should the swarm make? Would an LLM or a learned policy take some of them?
+[2]{.watch-num} [Human and autonomy]{.watch-title} Which decisions should the person keep and which should the swarm make on its own, and how would you tell good teaming from an operator who just follows?
 :::
 
 ::: {.watch-item}
-[3]{.watch-num} [Sense the human]{.watch-title} Gaze, heart rate, EEG: which streams, and which orders would you mark? The same loop fits a rescuer in rooms in the other session.
+[3]{.watch-num} [Sense the human]{.watch-title} Which physiological signals, and which swarm events, would you use to close the loop?
 :::
 :::
 
