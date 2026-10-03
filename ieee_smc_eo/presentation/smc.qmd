@@ -20,7 +20,7 @@ format:
     include-after-body: prompt-animation.html
 resources:
   - assets/game.mp4
-  - assets/Media 1 (1).mp4
+  - assets/mot mot.mp4
 title-slide-attributes:
   data-background-image: assets/background.jpg
   data-background-opacity: "0.45"
@@ -127,7 +127,7 @@ We study how humans **process and respond to information from LLMs**, using **ey
 <div style="display:flex; gap:32px; align-items:stretch; justify-content:center;">
 <div style="flex:1; min-width:0; display:flex; align-items:center; justify-content:center;">
 <video controls style="display:block; width:100%; height:480px; object-fit:contain;">
-  <source src="assets/Media%201%20(1).mp4" type="video/mp4">
+  <source src="assets/mot%20mot.mp4" type="video/mp4">
 </video>
 </div>
 <div style="flex:1; min-width:0; display:flex; align-items:center; justify-content:center;">
@@ -185,36 +185,32 @@ We study how humans **process and respond to information from LLMs**, using **ey
 ## What We [Investigate]{.accent} {#research-model}
 
 ```{=html}
-<svg viewBox="0 0 1180 470" role="img" aria-label="Diagram: How do LLM guidance and expertise change performance and visual behavior?" style="display:block; width:100%; max-height:540px; margin:30px auto 0; font-family:Rubik, sans-serif;">
-  <defs>
-    <marker id="rm-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6FB3F2"/></marker>
-    <marker id="rm-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#EC672C"/></marker>
-    <marker id="rm-yellow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#FFD54F"/></marker>
-  </defs>
-
-  <!-- What we change -->
-  <rect x="30" y="35" width="340" height="140" rx="14" fill="rgba(111,179,242,0.12)" stroke="#6FB3F2" stroke-width="3"/>
-  <text x="200" y="118" text-anchor="middle" fill="#FFFFFF" font-size="36" font-weight="700">LLM guidance</text>
-  <rect x="30" y="295" width="340" height="140" rx="14" fill="rgba(236,103,44,0.12)" stroke="#EC672C" stroke-width="3"/>
-  <text x="200" y="378" text-anchor="middle" fill="#FFFFFF" font-size="36" font-weight="700">Expertise</text>
-
-  <!-- Into the question -->
-  <path d="M370,105 C470,105 470,200 512,212" fill="none" stroke="#6FB3F2" stroke-width="4" marker-end="url(#rm-blue)"/>
-  <path d="M370,365 C470,365 470,270 512,258" fill="none" stroke="#EC672C" stroke-width="4" marker-end="url(#rm-orange)"/>
-
-  <circle cx="590" cy="235" r="80" fill="rgba(255,255,255,0.06)" stroke="#8A9299" stroke-width="3"/>
-  <text x="590" y="230" text-anchor="middle" fill="#FFFFFF" font-size="30" font-weight="700">change</text>
-  <text x="590" y="272" text-anchor="middle" fill="#EC672C" font-size="40" font-weight="700">?</text>
-
-  <!-- What we measure -->
-  <path d="M668,212 C710,200 710,105 806,105" fill="none" stroke="#FFD54F" stroke-width="4" marker-end="url(#rm-yellow)"/>
-  <path d="M668,258 C710,270 710,365 806,365" fill="none" stroke="#FFD54F" stroke-width="4" marker-end="url(#rm-yellow)"/>
-
-  <rect x="810" y="35" width="340" height="140" rx="14" fill="rgba(255,213,79,0.10)" stroke="#FFD54F" stroke-width="3"/>
-  <text x="980" y="118" text-anchor="middle" fill="#FFFFFF" font-size="36" font-weight="700">Performance</text>
-  <rect x="810" y="295" width="340" height="140" rx="14" fill="rgba(255,213,79,0.10)" stroke="#FFD54F" stroke-width="3"/>
-  <text x="980" y="378" text-anchor="middle" fill="#FFFFFF" font-size="36" font-weight="700">Visual behavior</text>
-</svg>
+<div style="display:grid; grid-template-columns:1fr 70px 200px 70px 1fr; grid-template-rows:auto 175px 175px; gap:12px 0; align-items:center; margin-top:20px; font-family:Rubik, sans-serif;">
+  <div style="grid-column:1; grid-row:1; color:#757575; font-size:0.6em; font-weight:600; letter-spacing:2px; text-align:center;">WHAT WE VARY</div>
+  <div style="grid-column:3; grid-row:1; color:#757575; font-size:0.6em; font-weight:600; letter-spacing:2px; text-align:center;">WE TEST</div>
+  <div style="grid-column:5; grid-row:1; color:#757575; font-size:0.6em; font-weight:600; letter-spacing:2px; text-align:center;">WHAT WE MEASURE</div>
+  <div style="grid-column:1; grid-row:2; height:100%; box-sizing:border-box; border:3px solid #EC672C; background:rgba(236,103,44,0.12); border-radius:14px; padding:14px 10px; text-align:center; display:flex; flex-direction:column; justify-content:center;">
+    <div style="font-size:1.15em; font-weight:700;">LLM guidance</div>
+    <div style="font-size:0.85em; margin-top:8px; line-height:1.4;">LLM<br>No LLM</div>
+  </div>
+  <div style="grid-column:1; grid-row:3; height:100%; box-sizing:border-box; border:3px solid #EC672C; background:rgba(236,103,44,0.12); border-radius:14px; padding:14px 10px; text-align:center; display:flex; flex-direction:column; justify-content:center;">
+    <div style="font-size:1.15em; font-weight:700;">Expertise</div>
+    <div style="font-size:0.85em; margin-top:8px; line-height:1.4;">Novice<br>Expert</div>
+  </div>
+  <div style="grid-column:2; grid-row:2; justify-self:center; align-self:center; color:#EC672C; font-size:2.6em; line-height:1; transform:rotate(25deg);">&#10132;</div>
+  <div style="grid-column:2; grid-row:3; justify-self:center; align-self:center; color:#EC672C; font-size:2.6em; line-height:1; transform:rotate(-25deg);">&#10132;</div>
+  <div style="grid-column:3; grid-row:2 / span 2; align-self:center; aspect-ratio:1; width:100%; box-sizing:border-box; border:3px solid #757575; background:rgba(255,255,255,0.06); border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; font-weight:700; font-size:0.8em; line-height:1.3;">Effect of<br>guidance?<br><span style="color:#EC672C; font-size:0.85em; font-weight:600;">by expertise?</span></div>
+  <div style="grid-column:4; grid-row:2; justify-self:center; align-self:center; color:#757575; font-size:2.6em; line-height:1; transform:rotate(-25deg);">&#10132;</div>
+  <div style="grid-column:4; grid-row:3; justify-self:center; align-self:center; color:#757575; font-size:2.6em; line-height:1; transform:rotate(25deg);">&#10132;</div>
+  <div style="grid-column:5; grid-row:2; height:100%; box-sizing:border-box; border:3px solid #757575; background:rgba(117,117,117,0.15); border-radius:14px; padding:14px 10px; text-align:center; display:flex; flex-direction:column; justify-content:center;">
+    <div style="font-size:1.15em; font-weight:700;">Performance</div>
+    <div style="font-size:0.85em; margin-top:8px; line-height:1.4;">Victims per step<br>Total reward<br>Saved victims</div>
+  </div>
+  <div style="grid-column:5; grid-row:3; height:100%; box-sizing:border-box; border:3px solid #757575; background:rgba(117,117,117,0.15); border-radius:14px; padding:14px 10px; text-align:center; display:flex; flex-direction:column; justify-content:center;">
+    <div style="font-size:1.15em; font-weight:700;">Visual behavior</div>
+    <div style="font-size:0.85em; margin-top:8px; line-height:1.4;">Fixations &amp; saccades<br>Pupil diameter<br>Game vs. chat attention</div>
+  </div>
+</div>
 ```
 
 ---
@@ -246,7 +242,7 @@ We study how humans **process and respond to information from LLMs**, using **ey
 **Mixed-effects model:** outcome = LLM condition + LLM × expertise + expertise + participant random intercept.
 
 ::: {style="text-align:center;"}
-![](assets/setup-annotated.png){fig-alt="Annotated photo of a participant at the game and eye-tracker setup, with an example LLM guidance chat message shown alongside" width="60%"}
+![](assets/participants-new.png){fig-alt="Participant at the game and eye-tracker setup, with an example LLM guidance chat message shown alongside" width="50%"}
 :::
 
 ---
