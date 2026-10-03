@@ -3,14 +3,14 @@
     python tools/make_gaze_figure.py path/to/recording.xdf
     python tools/make_gaze_figure.py recording.xdf --screen 2560x1440
 
-The recording is the LabRecorder file from the slide 33 demo (see
+The recording is the LabRecorder file from the slide 36 demo (see
 EYETRACKER_SETUP.md): gaze and game state on one clock. The figure shows where
 the fixations fell on the screen's three areas, and one timeline with the
 victims saved and the area the gaze was in. Writes
 assets/results/gaze-record.png in the deck's dark style.
 
 Reads the file with the notebook's own helpers (notebooks/lsl_tools.py in the
-MOSAIC checkout at MOSAIC_SRC), so the numbers match notebook Step 9. Needs
+MOSAIC checkout at MOSAIC_SRC), so the numbers match notebook Step 8. Needs
 matplotlib, scipy and pyxdf, not the game.
 """
 import argparse

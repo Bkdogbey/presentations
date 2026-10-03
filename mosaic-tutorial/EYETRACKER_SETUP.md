@@ -1,8 +1,13 @@
 # Eye-Tracker Demo: Machine Setup
 
-A checklist for getting any machine ready for the live eye-tracking demo
-(slide 33). Do the steps in order; each ends with a check. Allow 30 minutes on
-a new machine.
+A checklist for getting the presenter laptop ready for the live eye-tracking demo
+(slide 36). Do the steps in order; each ends with a check. Allow 30 minutes on a
+new machine. **Presenter only:** attendees do not need any of this.
+
+The demo shows a Tobii eye tracker streaming gaze into the same recording as the
+game, with the tutorial notebook (Step 7) running on **this laptop**, not on the
+tutorial server: LSL streams are found on the local network, so the tracker and the
+notebook have to be on one machine.
 
 ## What the machine needs
 
@@ -32,53 +37,35 @@ sudo apt install ./TobiiProEyeTrackerManager-2.7.2.deb
 Unplug and replug the tracker, then open Eye Tracker Manager and set the
 screen.
 
-Without that, MOSAIC's calibration gives the tracker a default: a screen whose
-bottom edge is 95 mm above the tracker. If your mount is different, gaze lands
-too high or too low. In rehearsal the default was in use and gaze sat low on
-the screen.
+Without that, the tracker assumes a default screen position. If your mount is
+different, gaze lands too high or too low: in rehearsal the default was in use
+and gaze sat low on the screen.
 
 ✓ **Check:** the tracker appears in Eye Tracker Manager with its serial number.
 
 ## 2 · Code and environment
 
-MOSAIC and the lab's `ixp` package go side by side in one folder.
-
 ```bash
 git clone https://github.com/iHuman-Lab/mosaic.git
-git clone https://github.com/iHuman-Lab/ixp.git
 conda create --name mosaic_tobii python=3.10 -y
 conda activate mosaic_tobii
 cd mosaic
 python -m pip install --upgrade pip
 python -m pip install -e .
-python -m pip install tobii-research pylsl
-# Ubuntu 22.04 only: a ready-built wxPython, so PsychoPy does not compile it
-python -m pip install https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-22.04/wxPython-4.2.1-cp310-cp310-linux_x86_64.whl
-python -m pip install psychopy ray ujson "beartype>=0.18.5,<0.19" icontract "pydantic>=2.9,<3"
-python -m pip install --no-deps --ignore-requires-python -e ../ixp
-python -m pip install matplotlib scipy pyxdf notebook
+python -m pip install tobii-research pylsl pyxdf matplotlib scipy pandas
+python -m pip install ipywidgets ipyevents notebook
 python -m pip uninstall -y pygame
-python -m pip install --force-reinstall --no-deps "pygame-ce>=2.5.2"
+python -m pip install --force-reinstall "pygame-ce>=2.5.2"
 ```
 
-Three lines are deliberate:
-
-- `--no-deps --ignore-requires-python` for `ixp`: it asks for Python 3.11, which
-  the Tobii SDK cannot use, and it lists plain `pygame`, which breaks MOSAIC's
-  window.
-- `matplotlib scipy pyxdf notebook` are for reading the recording afterwards
-  (step 5). The demo itself does not need them.
-- The last two lines must come last. Run them again if any later install puts
-  `pygame` back.
+The last two lines must come last. Run them again if any later install puts
+`pygame` back.
 
 ✓ **Check:**
 
 ```bash
-ls src/experiment/eye_demo.py
-python -c "import mosaic.gui.main, ixp.experiment, psychopy.visual, tobii_research, pylsl; print('demo ready')"
+python -c "import mosaic.gui.main, tobii_research, pylsl, ipyevents; print('demo ready')"
 ```
-
-If `eye_demo.py` is missing, the checkout predates the demo runner.
 
 ## 3 · Can the tracker see you?
 
@@ -96,79 +83,84 @@ screen.
 more. Sit **60 to 65 cm** from the screen; in rehearsal tracking was unbroken
 there and patchy at 80 cm. Tilt the tracker until `x`, `y`, `z` are near 0.50.
 
-## 4 · The demo runner
+## 4 · Calibrate
 
-No edits. `src/experiment/eye_demo.py` registers the tracker, calibrates it,
-and runs **one** two-minute mission with the keyless teammate (`SARGameDemo` in
-`game.py`). The lab's study in `experiment.py` and `configs/experiment.yaml`
-is left as it is.
-
-One setting can matter: `display:` on the top line of
-`configs/experiment.yaml` is the screen the calibration and the game open on
-(`0` is the first). With a projector attached, set it to the screen the
-tracker sits under.
+`notebooks/tobii_to_lsl.py` does **not** calibrate: the tracker uses whatever
+calibration it already holds. Calibrate it in Tobii Eye Tracker Manager with the
+volunteer seated, before you start. Without that, gaze can sit well off the screen.
 
 ## 5 · Run it
 
-Start from the `mosaic` folder with `mosaic_tobii` active.
+From the `mosaic` folder, with `mosaic_tobii` active. You need two terminals.
 
-```bash
-PYTHONPATH=src python -m experiment.eye_demo
-```
+1. **Terminal 1, the gaze stream.** Give it the size of the screen the tracker
+   sits under, in pixels, and leave it running:
 
-Windows PowerShell: `$env:PYTHONPATH = "src"`, then `python -m experiment.eye_demo`.
+   ```bash
+   cd notebooks
+   python tobii_to_lsl.py --width 1920 --height 1080
+   ```
 
-1. **Calibration:** five dots. Keep the head still and look at the black
-   centre of each dot until it disappears. `Space` accepts, `R` redoes. The
-   terminal then prints a table: on each row `Avg pos` should be close to
-   `Point`. If several rows are far off, run it again.
-2. **Play:** one mission, at most two minutes. `Esc` ends it. `Alt` gets the
-   keyless placeholder reply; no API key is used.
-3. **Show both streams:** open LabRecorder and press *Update*. Or, in a second
-   terminal (same environment) while the mission runs:
+2. **Check the stream** (a third terminal, same environment):
 
    ```bash
    python -c "import pylsl; [print(s.name(), '|', s.type(), '|', s.nominal_srate(), 'Hz') for s in pylsl.resolve_streams(2)]"
    ```
 
-   ✓ **Check:** `TobiiEyeTracker | Gaze | 60.0 Hz` and `SARGame | GameState | 0.0 Hz`
-   (0 means irregular: one sample per frame, about 30 a second).
-4. **Record (optional):** in LabRecorder tick both streams, press *Start*, and
-   *Stop* when the mission ends. It saves one `.xdf` file.
-5. **Read the recording:** open `notebooks/02_mosaic_human_ai.ipynb`, go to
-   Step 9, set `XDF_PATH` to the file and `SCREEN` to that screen's size in
-   pixels, and run Step 9. It shows where the volunteer looked and what they
-   looked at after each rescue.
-6. **Refresh slide 34:** from this `presentation/` folder,
-   `python tools/make_gaze_figure.py <recording.xdf>`, then render the deck.
+   ✓ **Check:** `TobiiEyeTracker | Gaze | 60.0 Hz`.
+
+3. **Terminal 2, the notebook.** In `notebooks/config.yaml` change the gaze source:
+
+   ```yaml
+   eye_tracker:
+     source: live
+   ```
+
+   then start Jupyter from the `notebooks` folder and open the notebook:
+
+   ```bash
+   cd notebooks
+   python -m jupyter notebook 02_mosaic_human_ai.ipynb
+   ```
+
+   Pick the **Python 3 (ipykernel)** kernel. Run the first code cell, the cells
+   of Step 1, and Step 7's two cells.
+4. **Play.** The volunteer clicks the game picture and plays; press **Stop** when
+   the mission ends. Step 7 saves `mosaic_session.xdf`.
+5. **Show both streams.** The notebook's Step 7 recorded exactly two: `TobiiEyeTracker`
+   (gaze, 60 Hz) and `MOSAIC-State` (one marker per action). Run Step 8 to read the
+   file back: it lists each stream with its sample count and time span, on one clock.
+6. **Refresh slide 37:** from this folder, `python tools/make_gaze_figure.py <recording.xdf>`,
+   then render the deck.
+
+**Know this before you show the analysis.** Live gaze arrives in pixels of the whole
+screen, but Step 7's gaze areas (game view, information panel, chat) are in pixels of
+the game window, and in the browser the game is a small picture somewhere on the page.
+So the dwell shares and heatmaps of Step 8 will not line up with the live gaze. Use
+the demo to show two streams on one clock, and slide 37 (drawn from the rehearsal
+recording) for what an analysis looks like.
 
 ## If something fails
 
 | Symptom | Fix |
 | --- | --- |
 | `check_eyetracker.py` says no tracker found | Step 1: the runtime is missing, or replug the USB cable. |
-| `No eye trackers found` when the demo starts | Same as above. |
+| `tobii_to_lsl.py` finds no tracker | Same as above. |
 | Both eyes rarely `yes`, or valid gaze well under 90% | Move to 60 to 65 cm and tilt the tracker towards the face (step 3). |
-| Calibration table rows far from their `Point` | The volunteer looked away or moved. Redo it; check step 3 first. |
-| Gaze is steady but always too low or too high | The tracker has the wrong screen position. Set the screen in Eye Tracker Manager (step 1). |
+| Gaze is steady but always too low or too high | The tracker has the wrong screen position, or is not calibrated. Set the screen and calibrate in Eye Tracker Manager (steps 1 and 4). |
+| The check in step 5 prints no `TobiiEyeTracker` | `tobii_to_lsl.py` is not running, or it is on another machine: LSL needs the same machine or network. |
+| Step 7 stops with "No LSL streams found" | The stream was not running when you ran the setup cell. Start `tobii_to_lsl.py` first, then rerun it. |
 | `cannot import name 'DIRECTION_LTR'` | Rerun the last two install lines of step 2. |
-| `No module named 'experiment'` | Run from the `mosaic` folder with `PYTHONPATH=src`. |
-| `No module named 'ixp.experiment'` | `ixp` was cloned but not installed. Rerun its install line from step 2. |
-| `Package 'ixp' requires a different Python` | The `--ignore-requires-python` flag is missing. |
-| Imports pick up the wrong packages (machines with ROS, or packages in `~/.local`) | `conda env config vars set PYTHONNOUSERSITE=1 PYTHONPATH= -n mosaic_tobii`, then activate again. |
-| Calibration opens on the wrong screen | Change `display:` in `configs/experiment.yaml`. |
-| The tracker fails on the day | Go to slide 34, which shows the rehearsal recording. |
+| `No module named 'ipyevents'` | `python -m pip install ipywidgets ipyevents`, then restart Jupyter. |
+| The tracker fails on the day | Go to slide 37, which shows the rehearsal recording. |
 
 ## What was tested
 
-On Ubuntu 22.04 with a Tobii Pro Spark (2 October 2026): steps 2 to 5 as
-written. The demo ran start to finish three times, both streams were recorded
-on one clock (gaze at 60 Hz, game at 30 frames a second), and notebook Step 9
-read the recording.
+The tracker side: Tobii Pro Spark on Ubuntu 22.04 (2 October 2026), steps 1 and 3,
+and gaze streaming at 60 Hz.
 
-Not tested: Eye Tracker Manager (it was not installed, so the tracker ran on
-the default screen position), a second screen or projector, starting and
-stopping LabRecorder by hand (the rehearsal used its command-line recorder),
-and Windows or macOS. In rehearsal valid gaze was 69% to 84% and calibration
-was off by a few hundred pixels at some points, so settle seating and the
-screen position at the venue before the session.
+**Not rehearsed in this form:** the notebook route above (steps 2, 4 and 5 with
+`tobii_to_lsl.py` and Step 7 on the presenter laptop), so run it once end to end at the
+venue before the session. Also untested: Eye Tracker Manager calibration, a second
+screen or projector, and Windows or macOS. Seating and the tracker's screen position
+decide the accuracy, so settle them there, not before.

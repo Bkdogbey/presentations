@@ -1,4 +1,4 @@
-"""Check the Tobii eye tracker before the slide 33 demo. Reads only; changes nothing.
+"""Check the Tobii eye tracker before the slide 36 demo. Reads only; changes nothing.
 
     python tools/check_eyetracker.py            # 20 seconds
     python tools/check_eyetracker.py --seconds 60
