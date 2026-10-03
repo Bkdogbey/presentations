@@ -76,7 +76,7 @@ python -m jupyter notebook 01_shasta_hsi.ipynb
 | --- | --- |
 | `pip install` fails looking for `ihuman-shasta` on PyPI | You are not installing from the clone. Run `pip install -e ".[gui]"` from inside `shasta-ub`. |
 | `shasta: command not found` | Activate the virtual environment in the terminal you run `shasta` from. |
-| Step 4 stops at `Java 11 or newer is required` | Only building a map needs Java: `conda install -c conda-forge openjdk`, or `shasta setup-java` (about 45 MB, no admin rights). `notebooks/MAPS.md` in the SHaSTA repository has the whole setup. |
+| Step 4 stops at `Java 11 or newer is required` | Only building a map needs Java: `sudo apt-get install default-jre-headless` (Ubuntu), `conda install -c conda-forge openjdk`, or `shasta setup-java` (about 45 MB, no admin rights). `notebooks/MAPS.md` in the SHaSTA repository has the whole setup. |
 | `No module named 'ipyevents'` | `python -m pip install ipywidgets ipyevents`, then restart Jupyter. |
 | The picture never appears | Run the first code cell first, then the interface cell; check the browser console for widget errors. |
 

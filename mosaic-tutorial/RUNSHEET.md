@@ -37,8 +37,8 @@ and **Sensing**. Part Four follows the notebook's cells (its Steps 1 to 9).
       `E` and `Q` do the same jobs. Click the picture first.
 - [ ] Hub address `https://jupyter.ihuman-lab.work`: every registrant has an account and
       knows their password. Test the QR codes (`tools/make_qr.py` to redraw them).
-- [ ] **The leaderboard (slide 31).** Scores are saved as small files in a folder that every user on the server can write to: `smc/mosaic` inside the shared folder. Set the shared folder in
-      `notebooks/config.yaml` (`leaderboard: dir:`). **Test it with two accounts:** a score saved from one user's notebook must show up in `03_leaderboard.ipynb` run by another. If the folder cannot
+- [ ] **The leaderboard (slide 31).** Scores are saved as small files in the one folder every user can write to: `/home/smc-tutorial/scores/mosaic`, set in
+      `notebooks/config.yaml` (`leaderboard: dir:`; `hub-setup/setup.sh` in the MOSAIC repository creates the folder). **Test it with two accounts:** a score saved from one user's notebook must show up in `03_leaderboard.ipynb` run by another. If the folder cannot
       be written, scores fall back to a `scores` folder next to the notebook, and the board stays empty, so check this before the session. Also in the notebook folder: `leaderboard.py`
       and `03_leaderboard.ipynb` (the projector notebook).
 - [ ] **No API keys in this session.** Nothing connects to a hosted model. The teammate
@@ -55,6 +55,7 @@ and **Sensing**. Part Four follows the notebook's cells (its Steps 1 to 9).
       Synchronized Record*) shows a figure drawn from one, and Step 8 of the notebook
       reads the same kind of file. After the venue rehearsal, redraw the figure from
       that recording and render again: `python tools/make_gaze_figure.py <recording.xdf>`.
+- [ ] **Master copies and user copies.** The server holds one read-only master of each tutorial, in `/home/smc-tutorial/master/` (`mosaic/`, `shasta/`); only an admin changes it. Every user gets their own `~/mosaic` and `~/shasta` automatically when their Jupyter server starts, so nobody's edits reach anyone else. To publish a new version, change the master (`hub-setup/README.md` in the MOSAIC repository has the commands); users who have not edited get new helper `.py` files at their next login, and anyone can start over with `smc-sync --reset mosaic` in a terminal (their old folder is kept as a backup). 
 - [ ] **What goes on the server.** The notebook and its three helper files must be the
       current versions, together: `02_mosaic_human_ai.ipynb`, `config.yaml`,
       `live_play.py`, `lsl_tools.py`. Step 7 needs `lsl_tools.py` with the
