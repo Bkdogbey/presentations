@@ -8,7 +8,7 @@ Everything runs in the browser, on the tutorial's Jupyter server: attendees open
 
 1. **Why human–swarm interaction** — the research question, the four dimensions a testbed has to vary (interface, AI, human factors, swarm), what SHaSTA is (its four components and the observe/decide/command/execute loop, on one slide)
 2. **Open the notebook** — scan the QR code, sign in to the tutorial server, pick the kernel, run Step 1: the map as a street graph and the config file, then a checkpoint
-3. **Put a human in the loop** — *Play It Yourself* (Step 3): the interface in the browser, with the mouse; the controls; `SwarmCommander` as the one seam any operator plugs into; *No Human Required*, the same environment through the Gym API (Step 2); *The PyBullet World*, the physics running with no window and rendered in 3D so you can interact with it (Step 3); and *What You Can Customize* (Step 4). A 10-minute break follows
+3. **Put a human in the loop** — *Play It Yourself* (Step 3): the interface in the browser, with the mouse; the controls; `SwarmCommander` as the one seam any operator plugs into; *No Human Required*, the same environment through the Gym API (Step 2); *The PyBullet World*, the physics running with no window and rendered in 3D so you can interact with it (Step 3); *What You Can Customize* (Step 4); and *Build a Map of Anywhere* (Step 4), a map of any place from OpenStreetMap in a few seconds. A 10-minute break follows
 4. **Measure the human, then extend** — Lab Streaming Layer (LSL): why it matters, logging the operator's orders, recording your own session (Step 7), analysing it (Step 8), the gotchas, and writing your own experiment with `BaseExperiment` (Step 5)
 
 The appendix holds the install for a laptop, and how to record a real study with an eye tracker on the tracker's laptop.
@@ -17,7 +17,7 @@ The appendix holds the install for a laptop, and how to record a real study with
 
 ```
 shasta-tutorial/
-├── shasta-tutorial.qmd   # the deck — edit this (32 slides: 28 main, one of them the break + closing + 3 appendix)
+├── shasta-tutorial.qmd   # the deck — edit this (33 slides: 29 main, one of them the break + closing + 3 appendix)
 ├── theme.scss            # lab theme, plus team, card-grid and title-slide styles, and the code-card / task-split /
 │                         #   numbered-step layouts copied from the MOSAIC tutorial's theme
 ├── README.md             # this file
@@ -40,7 +40,7 @@ The session runs on `notebooks/01_shasta_hsi.ipynb` in the SHaSTA repository, wi
 | Part Two: your first map | Step 1: the map and the config file |
 | Part Three: no human required | Step 2: actors, groups and the Gym API |
 | Part Three: play it yourself, the PyBullet world, the seam | Step 3: human in the loop (the interface, the 3D world, then a scripted operator) |
-| Part Three: what you can customize | Step 4: what you can customize |
+| Part Three: what you can customize, build a map of anywhere | Step 4: what you can customize, then build a map of any place from OpenStreetMap |
 | Part Four: build your own experiment | Step 5: write your own experiment |
 | Part Four: why LSL | Step 6: LSL basics |
 | Part Four: log the operator, record your own session | Step 7: record the operator and gaze |
@@ -60,13 +60,13 @@ cell of the notebook was run headless with a simulated session. What is *not* ye
 
 - **LSL is not part of `ihuman-shasta`.** The paper describes an LSL layer (recording of operator inputs, mission events, EEG and eye tracking), but the released package contains no LSL
   code. The notebook's `lsl_tools.py` is that layer: it forwards `SwarmCommander` events to an LSL marker stream, and records them with a gaze stream. In the notebook the gaze is
-  synthetic; a real tracker, EEG and LabRecorder are standard LSL tooling and were **not** exercised here. `tobii_to_lsl.py` and `shasta_gui_lsl.py` (the real-study route, appendix slide 32)
+  synthetic; a real tracker, EEG and LabRecorder are standard LSL tooling and were **not** exercised here. `tobii_to_lsl.py` and `shasta_gui_lsl.py` (the real-study route, appendix slide 33)
   have not been run against real hardware in this repository.
 - The interface screenshot (`assets/gui.png`) is a real capture of `shasta gui`: the window was driven offscreen with SDL's dummy video driver, given two orders, and the pygame surface saved.
 - The paper's own study used a pyglet interface; the interface shipped in this package is pygame-based.
 - No GIFs of a mission playing out (MOSAIC's tutorial has several).
 - Not rehearsed against a live audience; the timings in `RUNSHEET.md` are estimates.
-- `shasta fetch-osm` / `shasta build-map` (building a map of your own site) is mentioned but not exercised here: it needs Java and network access to the Overpass API.
+- Building a map of any place (Step 4, slide 20) runs `fetch_osm` and `build_map` from the notebook: it needs Java 11 or newer (the cell downloads one if there is none) and network access to the Overpass API and to GitHub (the OSM2World tool). It was tested end to end for downtown Bellevue (about ten seconds, calibration error under 0.01 m), not on the hub.
 
 ## Render
 

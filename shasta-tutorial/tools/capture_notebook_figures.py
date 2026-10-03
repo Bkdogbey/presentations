@@ -8,6 +8,7 @@ simulated mouse clicks to the interface, and writes to assets/:
     world-3d.png       Step 3: the PyBullet world rendered in 3D, with the groups and their orders
     gaze-timeline.png  Step 8: gaze over time, with the operator's orders
     gaze-heatmap.png   Step 8: where the (synthetic) gaze went, and its fixations
+    bellevue-map.png   Step 4: the interface on a map built from OpenStreetMap (needs Java and the network)
 
 Needs the notebook's dependencies (shasta[gui], pylsl, pyxdf, matplotlib, pandas, ipywidgets, ipyevents) and runs headless.
 """
@@ -167,6 +168,12 @@ if __name__ == "__main__":
             play(orders=1)
     run("s3_world")
     capture_world()
+    for cell_id in ("s4_map", "s4_map_play"):                     # builds the map of downtown Bellevue, then plays on it
+        run(cell_id)
+    play(orders=2)
+    from PIL import Image
+    Image.fromarray(live._session._frame).save(OUT / "bellevue-map.png")
+    print("bellevue-map.png")
     for cell_id in ("s7_setup", "s7_play"):
         run(cell_id)
     play(orders=4)

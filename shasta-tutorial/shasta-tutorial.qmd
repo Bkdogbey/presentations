@@ -801,6 +801,64 @@ every participant gets the same task.
 
 ---
 
+## Build a Map of [Anywhere]{.accent}
+
+::: {.hook}
+Any place in OpenStreetMap becomes a SHaSTA map in a few seconds.
+:::
+
+:::: {.columns .run-split}
+
+::: {.column width="44%"}
+
+::: {.code-card}
+[notebook · Step 4]{.code-file} [build a map of anywhere]{.code-where}
+
+```{.python code-line-numbers="false"}
+BBOX = (47.612, -122.206,
+        47.618, -122.198)  # S, W, N, E
+
+fetch_osm(*BBOX, "bellevue.osm")
+build_map("bellevue.osm", "bellevue")
+```
+:::
+
+::: {.feature-list .compact}
+::: {.feature-row}
+[Fetch]{.feature-name} Roads and buildings from OpenStreetMap
+:::
+::: {.feature-row}
+[Build]{.feature-name} A 3D mesh and the latitude/longitude table
+:::
+::: {.feature-row}
+[Play]{.feature-name} The same interface, on your own campus or city
+:::
+:::
+
+[Which place would you study?]{.predict}
+
+:::
+
+::: {.column width="56%"}
+![](assets/bellevue-map.png){fig-alt="The SHaSTA interface on a map of downtown Bellevue built in the notebook: buildings coloured by type, streets with numbered intersections, a UAV group and a UGV group on their way to yellow target markers."}
+
+::: {.fig-note}
+Downtown Bellevue, built in the notebook: 243 intersections.
+:::
+:::
+
+::::
+
+::: {.notes}
+The map is not fixed. Any place in OpenStreetMap can become a SHaSTA map: give a bounding box (south, west, north, east) and two calls do the work. `fetch_osm` downloads the roads and
+buildings from the Overpass service, and `build_map` runs OSM2World to make the 3D mesh and `coordinates.csv`, the table that converts latitude and longitude to simulator metres. It takes
+about ten seconds for the box on the slide, which is downtown Bellevue, where we are. Keep the box to a campus or a few blocks, up to about 2 km across. It needs Java 11 or newer, which
+the cell fetches once if the server has none, and a connection to OpenStreetMap, so if the room's network is slow, run it once before the session and let people reuse the folder. Let people
+change the box to their own campus; right-click on openstreetmap.org shows the coordinates of a point.
+:::
+
+---
+
 <!-- ============ BREAK ============ -->
 
 ::: {.divider}
