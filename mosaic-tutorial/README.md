@@ -34,14 +34,14 @@ rehearsal recording.
 
 ```
 mosaic-tutorial/
-├── mosaic-tutorial.qmd   # the deck — edit this (44 slides: 39 main, one of them the break + closing + 4 appendix)
+├── mosaic-tutorial.qmd   # the deck — edit this (46 slides: 41 main, one of them the break + closing + 4 appendix)
 ├── theme.scss            # lab theme (template + team, fill-mode cards, horizontal flow,
 │                         #   architecture diagram + .detached variant, annotated
 │                         #   screenshots, .band notes, layer bands, you-are-here strip,
 │                         #   .checkpoint callouts, dark-theme panel-tabset)
 ├── SETUP.md              # send to attendees before the session: nothing to install, plus the optional laptop install
 ├── RUNSHEET.md           # facilitator timings, cut list, expected failures
-├── EYETRACKER_SETUP.md   # presenter only: machine setup for the slide 36 eye-tracker demo
+├── EYETRACKER_SETUP.md   # presenter only: machine setup for the slide 37 eye-tracker demo
 ├── assets/               # figures used in the deck
 ├── tools/                # scripts that draw the figures (see Assets)
 └── labs/                 # side examples from the earlier, laptop-based version of the tutorial;
@@ -51,9 +51,9 @@ mosaic-tutorial/
 ## The notebook
 
 The session runs on `notebooks/02_mosaic_human_ai.ipynb` in the MOSAIC repository, with
-three helpers next to it: `config.yaml` (the task as a text file), `live_play.py` (shows
+four helpers next to it: `config.yaml` (the task as a text file), `leaderboard.py` (the shared leaderboard of Step 9, with `03_leaderboard.ipynb` to show it on the projector), `live_play.py` (shows
 the game in the browser and takes the keys) and `lsl_tools.py` (recording and analysis).
-Part Four of the deck is that notebook's Steps 1 to 8:
+Part Four of the deck is that notebook's Steps 1 to 9:
 
 | Deck | Notebook |
 | --- | --- |
@@ -64,6 +64,7 @@ Part Four of the deck is that notebook's Steps 1 to 8:
 | 4.1 SAR: customize, placer, rewards | Step 5: what you can customize |
 | 4.3 LLM: stand-in teammate, prompt styles | Step 6: the AI teammate |
 | 4.4 Sensing: recording, live demo | Steps 7 and 8: record game state and gaze, then analyse it |
+| The challenge (after 4.1) | Step 9: the same level for everyone, a prediction first, a random agent for comparison, and the leaderboard |
 
 Change the notebook and the slides it feeds (the gallery and the chat screenshots)
 together: `tools/capture_notebook_figures.py` runs the notebook's own cells.
@@ -97,7 +98,7 @@ Navigate with arrow keys, `f` for fullscreen, `s` for speaker notes.
 | `controls-*.gif`, `chat-advice.png` (no longer used by the deck) | Captured by `tools/capture_controls.py` — one clip per control (arrows, Space, Tab, Alt) with a keycap strip that lights on the pressed key; the advice clip and chat still use `ReliableTeammate` from `labs/advisor.py`; the deck shows them only as an illustration of the controls |
 | `results/*.png`, `results/*.txt` | Captured by `tools/capture_config_results.py` — one before/after pair per Part Four setting, each rendered from the same seed with only the edited setting changed. The reward, time, mission-box, and chat crops (`scoring`, `time`, `panel`, `chatpair`) render the GUI at twice its size and crop inside each widget's frame, so they stay sharp at slide size |
 | `results/customize-gallery.png`, `results/teammate-placeholder.png`, `results/teammate-sparse.png`, `results/teammate-detailed.png` | Drawn by `tools/capture_notebook_figures.py` by running the notebook's own cells (Step 5's five levels; Step 6's chat panel after one `Q`, for the placeholder and for the stand-in teammate under each prompt type). They need a MOSAIC checkout (`MOSAIC_REPO`) and only the public `mosaic` API |
-| `results/gaze-record.png` | Drawn by `tools/make_gaze_figure.py` from the rehearsal recording of the slide 36 eye-tracker demo (LabRecorder `.xdf`): fixations on the screen's three areas, and one timeline of rescues and gaze area. Redraw it from the venue recording |
+| `results/gaze-record.png` | Drawn by `tools/make_gaze_figure.py` from the rehearsal recording of the slide 37 eye-tracker demo (LabRecorder `.xdf`): fixations on the screen's three areas, and one timeline of rescues and gaze area. Redraw it from the venue recording |
 | `cam-*-walk.gif` | Captured by `tools/capture_camera_gifs.py` — one walk through a door rendered through all three cameras frame by frame, with the ring and room outline recomputed per frame; equal frame timing so the three play in step |
 | `qr-notebook.png`, `qr-paper.png` | Drawn by `tools/make_qr.py` (needs `segno`): the tutorial's Jupyter server, where the companion notebook runs, on the Part Two and Part Four dividers, and the slides of the lab's SMC 2026 paper, on the *MOSAIC in a Study* slide. The addresses are at the top of the script |
 | `logo.png`, `background.jpg` | iHuman Lab template |
@@ -140,9 +141,9 @@ The capture scripts share `tools/_capture_common.py` (MOSAIC path, grid codes,
 breadth-first routing, the study env builder, GIF writing). `gif-restart.html`
 is included after the deck body and restarts a slide's clips when it opens.
 `tools/check_eyetracker.py` is not a capture script: it checks the Tobii tracker
-before the slide 36 demo (see `EYETRACKER_SETUP.md`).
+before the slide 37 demo (see `EYETRACKER_SETUP.md`).
 `tools/make_gaze_figure.py <recording.xdf>` draws `results/gaze-record.png` for
-slide 37 from the demo's LabRecorder file, with the notebook's own helpers
+slide 38 from the demo's LabRecorder file, with the notebook's own helpers
 (`notebooks/lsl_tools.py` in the MOSAIC checkout). It is not in the list above
 because it needs a recording; rerun it after the venue rehearsal.
 

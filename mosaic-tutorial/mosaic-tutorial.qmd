@@ -1810,6 +1810,65 @@ game when you press Stop includes what the decoys cost.
 
 ---
 
+## The Challenge: Beat the [Room]{.accent}
+
+::: {.hook}
+Same level, two minutes, one leaderboard.
+:::
+
+:::: {.task-split}
+
+::: {.task-col}
+::: {.code-card}
+[notebook · Step 9]{.code-file} [before you play, and when you stop]{.code-where}
+
+```{.python code-line-numbers="false"}
+PREDICTION = 3       # your guess: set it BEFORE you play
+
+# when the game ends, your score is saved:
+submit_score("mosaic", NICKNAME, score, steps=steps,
+             prediction=PREDICTION)
+```
+:::
+
+[Run]{.task-label} Step 9: set `PREDICTION`, run the cell, and play.
+
+[What score will you get?]{.predict}
+:::
+
+::: {.result-col .fragment}
+[What you will see]{.task-label}
+
+::: {.watch-list}
+::: {.watch-item}
+[1]{.watch-num} [Your result]{.watch-title} Your score, and how close your guess was
+:::
+
+::: {.watch-item}
+[2]{.watch-num} [The agent]{.watch-title} A random agent plays the same level 50 times: where do you rank?
+:::
+
+::: {.watch-item}
+[3]{.watch-num} [The board]{.watch-title} Everyone's scores, and who predicted their own best
+:::
+:::
+:::
+
+::::
+
+::: {.punchline}
+A real victim is +1 and a decoy is −5: [telling them apart is the whole game]{.accent}.
+:::
+
+::: {.notes}
+Everyone plays the same level (a fixed seed, so the buildings, victims, decoys and lava are identical), for two minutes. The score is the reward: +1 for each real victim,
+−5 for each decoy. The game ends at Stop, when the two minutes are up, or when the episode ends by itself. Before they play, everyone sets `PREDICTION` to the score they expect:
+commit first, then see. Afterwards the notebook shows how far off they were and how a random agent does on the same level. Put `03_leaderboard.ipynb` on the projector: it refreshes the
+board every few seconds, ranks by score with fewer steps breaking a tie, and lists the best forecasters. Only each person's best score is kept, so they can play again.
+:::
+
+---
+
 ## 4.2 · [GUI]{.accent}
 
 ::: {.custom-strip}
@@ -2449,6 +2508,28 @@ were grouped into experts and novices. The code opens the talk's slides
 (ihuman-lab.github.io/presentations/ieee-smc-eo/); the program entry is
 conf.papercept.net, SMC26 program, Monday, MoA10.3. Check the time and room
 against the final program on the day.
+:::
+
+---
+
+## Open [Discussion]{.accent}
+
+::: {.watch-list .discuss}
+::: {.watch-item}
+[1]{.watch-num} [Human–AI Teaming]{.watch-title} What human–AI teaming question would you ask first, and what would you change in the rooms, victims or rewards to ask it?
+:::
+
+::: {.watch-item}
+[2]{.watch-num} [An LLM as teammate]{.watch-title} What should it see, what should it be allowed to do, and how would you tell a good teammate from a fluent one?
+:::
+
+::: {.watch-item}
+[3]{.watch-num} [Sense the human]{.watch-title} Which physiological signals, and which game events, would you use to close the loop?
+:::
+:::
+
+::: {.notes}
+Open on purpose: the three questions are prompts, not an agenda, so let the room choose. Give two minutes in pairs first, then take whatever comes. The third question reaches across to the SHaSTA session, so people who attend only one can still join. If it goes quiet, ask who guessed their score best and what changed how they played. Write down what people say is missing; it becomes the issue list.
 :::
 
 ---

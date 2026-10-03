@@ -1,53 +1,82 @@
-# Setup — Before the SHaSTA Tutorial
+# Before You Arrive — SHaSTA Tutorial
 
-Send this to registrants at least a few days ahead. Doing this in advance means the session starts with a working install instead of everyone debugging `pip` together.
+**IEEE SMC 2026 · Bellevue, WA · Session 2, 11:00 AM–1:00 PM · Evergreen C**
 
-## Requirements
+**You do not need to install anything.** The tutorial runs in your browser, on the tutorial's Jupyter server:
+the simulation and the interface are drawn on the server and shown in the notebook, and your mouse and keys go back to it.
 
-- Python 3.9 or newer
-- `git`
-- About 10 minutes and a stable connection (the install pulls the SHaSTA map assets, which include some multi-MB city maps)
+## What you need
 
-## Install
+- A laptop with a current browser (Chrome, Firefox, Edge, or Safari) and Wi-Fi
+- The password you were given for the tutorial server
+- No API key, no Python, no Git
 
-The PyPI package (`ihuman-shasta`) is not published yet, so install from a clone:
+## Before the session (two minutes)
+
+1. Open <https://jupyter.ihuman-lab.work>.
+2. Sign in with your password.
+3. Open `01_shasta_hsi.ipynb`. If it asks for a kernel, choose **Python (smc)**.
+4. Run the first code cell and then the cells of Step 1, each with `Shift+Enter`.
+
+✓ **Checkpoint** — Step 1 prints the number of intersections and street segments of the map, draws it with numbered intersections, and no cell shows
+red error text. If so, you are ready. If not, tell a helper when you arrive.
+
+In the session, open the same notebook. Wherever a cell opens the interface, **click the picture first**, then use the mouse and the keys:
+click a group's marker (or press `1`-`9`), click a street node, then `Enter` or the **Send order** button. The wheel zooms, a right-drag pans,
+`Space` pauses. Press **Stop** to end and see how many targets you reached.
+
+## If something does not work
+
+| Symptom | Fix |
+| --- | --- |
+| The server does not open | Check your Wi-Fi, then ask a helper. Share a neighbor's screen meanwhile. |
+| `No module named 'shasta'` | Wrong kernel: pick **Python (smc)** at the top right of the notebook. |
+| `No module named 'live_play'` | `live_play.py` is not in the same folder as the notebook. Ask a helper. |
+| The picture does not respond | Click the picture once, then use the mouse and keys. |
+| A blank picture | Run the cell again and wait a second. |
+| `Cannot load an actor multiple times` | Rerun the whole cell, not only its last line. |
+| The page asks you to sign in again | Sign in; your work is kept. |
+
+## Optional: run it on your own laptop
+
+Only if you want to work offline or take it home. You need Python **3.9 or newer** and Git. The interface is drawn off-screen and shown in the notebook,
+so no display setup is needed. The PyPI package is not published yet, so install from a clone.
+
+**macOS / Linux**
 
 ```bash
 git clone <the shasta-ub repository URL>
 cd shasta-ub
 python3 -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
-pip install -e ".[gui]"
+source .venv/bin/activate
 ```
 
-`[gui]` adds the human interface (`shasta gui`) on top of the core simulator.
+**Windows PowerShell**
 
-Part 4 also uses Lab Streaming Layer. Install its Python package in the same environment (optional, but needed if you want to run `labs/lsl_markers.py` during the session):
+```powershell
+git clone <the shasta-ub repository URL>
+cd shasta-ub
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+```
+
+Then, from the `shasta-ub` folder:
 
 ```bash
-pip install pylsl
+python -m pip install -e ".[gui]"
+python -m pip install pylsl pyxdf ipywidgets ipyevents notebook
+cd notebooks
+python -m jupyter notebook 01_shasta_hsi.ipynb
 ```
 
-## Verify it worked
+`[gui]` adds the human interface. Check the install with `shasta maps` (lists the maps) and `shasta demo` (a headless mission; it should end with
+"All groups reached their targets"). `shasta gui` opens the interface in its own window. If Jupyter asks for a kernel, choose **Python 3 (ipykernel)**.
 
-```bash
-shasta maps
-shasta demo
-```
+| Symptom | Fix |
+| --- | --- |
+| `pip install` fails looking for `ihuman-shasta` on PyPI | You are not installing from the clone. Run `pip install -e ".[gui]"` from inside `shasta-ub`. |
+| `shasta: command not found` | Activate the virtual environment in the terminal you run `shasta` from. |
+| `No module named 'ipyevents'` | `python -m pip install ipywidgets ipyevents`, then restart Jupyter. |
+| The picture never appears | Run the first code cell first, then the interface cell; check the browser console for widget errors. |
 
-`shasta maps` should print a list of city names (`buffalo-small`, `chicago`, `new-york`, ...). `shasta demo` should print a series of `step ... centroids ...` lines and end with `All groups reached their targets after N steps.` — no window opens for this one.
-
-Then try the interface itself:
-
-```bash
-shasta gui
-```
-
-A top-down map should open with a handful of blue and red markers on it. If it does, you're ready for the session — close it and see you there.
-
-## If something goes wrong
-
-- **`pip install` fails looking for `ihuman-shasta` on PyPI** — you're not installing from the clone; re-check you ran `pip install -e ".[gui]"` from inside the cloned `shasta-ub` directory (the `-e .` matters — it means "this local directory").
-- **`shasta: command not found`** after install — make sure the virtual environment is activated (`source .venv/bin/activate`) in the same terminal you're running `shasta` from.
-- **`shasta gui` doesn't open a window / errors about a display** — this needs a real display (not a pure SSH session without X forwarding, and not most cloud notebooks). If you're on such a setup, the headless commands (`shasta maps`, `shasta demo`, and the Python API) still work; message the organizers before the session so Part 3 can be adjusted for you.
-- Anything else — bring it to the session; "my install is broken in a new way" is itself useful material for a hands-on tutorial.
+If you are still stuck when you arrive, come to the front: we have helpers and a pre-built environment on a spare machine.

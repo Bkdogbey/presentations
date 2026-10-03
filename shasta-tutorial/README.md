@@ -1,13 +1,53 @@
 # SHaSTA Tutorial
 
-A hands-on introduction to [SHaSTA](https://doi.org/10.21203/rs.3.rs-4338790/v1) (Simulator for Human And Swarm Team Applications) for HCI and human-factors researchers, built on the iHuman Lab Quarto reveal.js template — structured the same way as [`mosaic-smc-tutorial`](../mosaic-smc-tutorial/), the sibling tutorial for MOSAIC.
+Session 2 of **Closing the Human–AI Loop: Modular Architectures for Autonomous Teaming and Physiological Sensing**, a joint tutorial by Oklahoma State University and the University at Buffalo at IEEE SMC 2026. A hands-on introduction to [SHaSTA](https://doi.org/10.21203/rs.3.rs-4338790/v1) (Simulator for Human And Swarm Team Applications) for HCI and human-factors researchers, built on the iHuman Lab Quarto reveal.js template. Session 1, [`mosaic-tutorial`](../mosaic-tutorial/), is the sibling tutorial for MOSAIC.
 
-The narrative thread is human–swarm interaction (HSI): SHaSTA is a pybullet-based testbed where an operator commands UAV and UGV groups that move in formation along real city street networks, and where the operator's actions can be recorded on one clock with physiological data. The deck never treats the swarm as the point; the person is. It is four parts:
+The narrative thread is human–swarm interaction (HSI): SHaSTA is a pybullet-based testbed where an operator commands UAV and UGV groups that move in formation along real city street networks, and where the operator's actions can be recorded on one clock with physiological data. The deck never treats the swarm as the point; the person is.
+
+Everything runs in the browser, on the tutorial's Jupyter server: attendees open one notebook, `01_shasta_hsi.ipynb` in the SHaSTA repository, and command the swarm in it. Nothing is installed on their laptops; the install is a single appendix slide. The deck is four parts:
 
 1. **Why human–swarm interaction** — the research question, the four dimensions a testbed has to vary (interface, AI, human factors, swarm), what SHaSTA is (its four components and the observe/decide/command/execute loop, on one slide)
-2. **Install SHaSTA** — the PyPI package isn't published yet, so this installs from a clone, then verifies with `shasta maps` and `shasta demo`
-3. **Put a human in the loop** — the built-in interface (`shasta gui`, its controls and side panel), `SwarmCommander` as the one seam that any operator (scripted, AI, or your own interface) plugs into, shown with a script that runs with only pybullet and no interface
-4. **Measure the human, then extend** — Lab Streaming Layer (LSL): why it matters, logging operator events to an LSL stream and what a recorder sees, then the gotchas and writing your own experiment with `BaseExperiment`
+2. **Open the notebook** — scan the QR code, sign in to the tutorial server, pick the kernel, run Step 1: the map as a street graph and the config file, then a checkpoint
+3. **Put a human in the loop** — *Play It Yourself* (Step 3): the interface in the browser, with the mouse; the controls; `SwarmCommander` as the one seam any operator plugs into; *No Human Required*, the same environment through the Gym API (Step 2); *The PyBullet World*, the physics running with no window and rendered in 3D so you can interact with it (Step 3); and *What You Can Customize* (Step 4). A 10-minute break follows
+4. **Measure the human, then extend** — Lab Streaming Layer (LSL): why it matters, logging the operator's orders, recording your own session (Step 7), analysing it (Step 8), the gotchas, and writing your own experiment with `BaseExperiment` (Step 5)
+
+The appendix holds the install for a laptop, and how to record a real study with an eye tracker on the tracker's laptop.
+
+## Contents
+
+```
+shasta-tutorial/
+├── shasta-tutorial.qmd   # the deck — edit this (32 slides: 28 main, one of them the break + closing + 3 appendix)
+├── theme.scss            # lab theme, plus team, card-grid and title-slide styles, and the code-card / task-split /
+│                         #   numbered-step layouts copied from the MOSAIC tutorial's theme
+├── README.md             # this file
+├── SETUP.md              # send this to attendees before the session: nothing to install, plus the optional laptop install
+├── RUNSHEET.md           # facilitator timings (estimated, not yet rehearsed)
+├── assets/               # figures used in the deck (team/ holds the portraits)
+├── tools/                # capture_notebook_figures.py draws the figures that come from the notebook
+└── labs/                 # standalone scripts from the earlier, laptop-based version of the tutorial; the deck no longer
+                          #   uses them (the notebook has their content), safe to delete
+```
+
+## The notebook
+
+The session runs on `notebooks/01_shasta_hsi.ipynb` in the SHaSTA repository, with four helpers next to it: `config.yaml` (the simulation as a text file), `live_play.py`
+(shows the pygame interface in the browser and passes the mouse and keys to it), `world_view.py` (the interactive 3D view of the PyBullet world) and `lsl_tools.py` (recording and analysis). `live_play.py` and
+`lsl_tools.py` are the same files as in the MOSAIC tutorial's notebook folder. The deck follows the notebook's eight steps:
+
+| Deck | Notebook |
+| --- | --- |
+| Part Two: your first map | Step 1: the map and the config file |
+| Part Three: no human required | Step 2: actors, groups and the Gym API |
+| Part Three: play it yourself, the PyBullet world, the seam | Step 3: human in the loop (the interface, the 3D world, then a scripted operator) |
+| Part Three: what you can customize | Step 4: what you can customize |
+| Part Four: build your own experiment | Step 5: write your own experiment |
+| Part Four: why LSL | Step 6: LSL basics |
+| Part Four: log the operator, record your own session | Step 7: record the operator and gaze |
+| Part Four: analyse the recording | Step 8: analyse the recording |
+
+The mouse input (a click on a marker or a street node, the Send button, the wheel, a right-drag, Shift-click) was tested with simulated browser events against the real
+interface, and has **not** yet been tested in a real browser; see `RUNSHEET.md`.
 
 ## Team
 
@@ -15,31 +55,18 @@ SHaSTA is a joint project of Oklahoma State University (iHuman Lab) and the Univ
 
 ## Status
 
-This is a working draft, not a rehearsed multi-hour workshop like the MOSAIC tutorial yet. The commands and code in the deck were run against a clean editable install of SHaSTA (`pip install -e ".[gui]"`). What's *not* yet done:
+A working draft, not yet rehearsed with an audience. The commands and code in the deck were run against a clean editable install of SHaSTA (`pip install -e ".[gui]"`), and every code
+cell of the notebook was run headless with a simulated session. What is *not* yet done:
 
-- **LSL is not part of `ihuman-shasta`.** The paper describes an LSL layer (recording of operator inputs, mission events, EEG and eye tracking), but the released package contains no LSL code. Part 4 teaches the concept from the paper and shows a small add-on pattern, `labs/lsl_markers.py`, which forwards `SwarmCommander` events to an LSL marker stream. That script was run, and its output is what the "Log the Operator" slide shows. The recorder side (LabRecorder, the XDF file, analysis with `pyxdf`) and the EEG and eye-tracker streams are standard LSL tooling and were **not** exercised here.
-- The interface screenshot (`assets/gui.png`) is a real capture of `shasta gui`: the window was driven offscreen with SDL's dummy video driver, given two orders, and the pygame surface saved. It shows a real mission mid-flight.
+- **LSL is not part of `ihuman-shasta`.** The paper describes an LSL layer (recording of operator inputs, mission events, EEG and eye tracking), but the released package contains no LSL
+  code. The notebook's `lsl_tools.py` is that layer: it forwards `SwarmCommander` events to an LSL marker stream, and records them with a gaze stream. In the notebook the gaze is
+  synthetic; a real tracker, EEG and LabRecorder are standard LSL tooling and were **not** exercised here. `tobii_to_lsl.py` and `shasta_gui_lsl.py` (the real-study route, appendix slide 32)
+  have not been run against real hardware in this repository.
+- The interface screenshot (`assets/gui.png`) is a real capture of `shasta gui`: the window was driven offscreen with SDL's dummy video driver, given two orders, and the pygame surface saved.
 - The paper's own study used a pyglet interface; the interface shipped in this package is pygame-based.
 - No GIFs of a mission playing out (MOSAIC's tutorial has several).
 - Not rehearsed against a live audience; the timings in `RUNSHEET.md` are estimates.
-- `shasta fetch-osm` / `shasta build-map` (building a map of your own site) is mentioned but not exercised here — it needs Java and network access to the Overpass API.
-
-## Contents
-
-```
-shasta-tutorial/
-├── shasta-tutorial.qmd   # the deck — edit this
-├── theme.scss             # lab theme, plus team, card-grid and title-slide styles
-├── README.md              # this file
-├── SETUP.md               # send this to attendees before the session
-├── RUNSHEET.md             # facilitator timings (estimated, not yet rehearsed)
-├── assets/                 # figures used in the deck (team/ holds the portraits)
-└── labs/                   # tested standalone scripts the deck points to
-    ├── play.py               # a minimal mission with an EDIT ME block of knobs
-    ├── human_loop.py         # a scripted operator driving SwarmCommander, no interface
-    ├── lsl_markers.py        # the same loop, logging operator events to an LSL stream
-    └── custom_experiment.py  # the smallest complete BaseExperiment subclass
-```
+- `shasta fetch-osm` / `shasta build-map` (building a map of your own site) is mentioned but not exercised here: it needs Java and network access to the Overpass API.
 
 ## Render
 
@@ -54,14 +81,24 @@ Run both from this directory. Navigate with arrow keys, `f` for fullscreen, `s` 
 
 | File | Source |
 | --- | --- |
-| `world-angled.png` | A headless pybullet render (`getCameraImage` via `ER_TINY_RENDERER`, no display needed) of `buffalo-small`'s OSM2World mesh from an elevated angle. Used on the title slide and the "one real place" slide. |
+| `world-angled.png` | A headless pybullet render (`getCameraImage` via `ER_TINY_RENDERER`, no display needed) of `buffalo-small`'s OSM2World mesh from an elevated angle. Not used in the deck at the moment (the title slide is plain, to match the MOSAIC deck). |
 | `world-overview.png` | The same map, top-down, wider frame. Not currently used in the deck — a spare in case you want a second establishing shot. |
 | `swarm-topdown.png` | Same technique, top-down, captured a few steps into a `GoToNodeExperiment` mission. Not currently used in the deck. |
-| `gui.png` | A real `shasta gui` capture (see Status). Used on the "Open the Interface" slide. |
+| `gui.png` | A real `shasta gui` capture (see Status). Used on the "Play It Yourself" slide. |
+| `map-graph.png`, `world-3d.png`, `gaze-timeline.png`, `gaze-heatmap.png` | Drawn by `tools/capture_notebook_figures.py` by running the notebook's own cells: Step 1's street graph, Step 3's 3D PyBullet view (after a simulated click on the ground), and Step 8's gaze timeline and heatmap from a short simulated session with synthetic gaze. `gaze-heatmap.png` is not used in the deck at the moment. Needs a SHaSTA checkout (`SHASTA_REPO`) |
+| `qr-notebook.png` | The tutorial's Jupyter server, where the notebook runs: same code as in the MOSAIC tutorial (drawn by its `tools/make_qr.py`) |
 | `team/*.jpg` | Portraits for the team slide, from public university pages. |
 | `logo.png`, `background.jpg` | iHuman Lab template, unmodified. |
 
 All three SHaSTA renders were captured with a short throwaway script (not checked in) that builds a `ShastaEnv`, steps it a few times, and calls `env.core.physics_client.getCameraImage(...)` directly — see the Configure & Extend part of the deck for the underlying API. Regenerating or adding more views just needs that same pattern with a different `cameraEyePosition`/`cameraTargetPosition`.
+
+Redraw the notebook figures with:
+
+```bash
+SHASTA_REPO=<checkout of the SHaSTA repository> python tools/capture_notebook_figures.py
+```
+
+It runs the notebook in a temporary copy of its folder, so nothing is written to the checkout.
 
 ## Repo issues this tutorial exposed
 
@@ -75,8 +112,7 @@ Verified against a clean editable install (`pip install -e ".[gui]"`) of this ch
 
 ## Before presenting
 
-1. Send `SETUP.md` to registrants ahead of time (it includes the optional `pip install pylsl` for Part 4).
-2. Re-run every command in Part 2 against the current `main` of the SHaSTA repo — issue 1 above (PyPI) may be resolved by then.
-3. Read `RUNSHEET.md` — its timings are estimates, not yet validated against a live run; adjust after your first dry run.
-4. Decide how to handle LSL: either keep the slides as a description of the paper's platform plus the add-on pattern, or add LSL to the SHaSTA repo first and update Part 4 to show the real thing.
-5. If you can, run `labs/lsl_markers.py` beside a real LSL device and recorder once, so the "session" step is something you have seen work.
+1. Send `SETUP.md` to registrants ahead of time: it asks them to sign in to the tutorial server and run Step 1 once, which is the whole preparation.
+2. Put the current notebook and its helpers on the server (see `RUNSHEET.md`) and run it top to bottom as an attendee. **Test the mouse in a real browser**, and load-test it with several simultaneous players.
+3. Read `RUNSHEET.md`: its timings are estimates, not yet validated against a live run; adjust after your first dry run.
+4. Decide how to handle LSL: the notebook shows the paper's pattern with synthetic gaze; if you can, try `tobii_to_lsl.py` and `shasta_gui_lsl.py` beside a real tracker and recorder once, so the real-study slide is something you have seen work.

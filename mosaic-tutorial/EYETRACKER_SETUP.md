@@ -1,7 +1,7 @@
 # Eye-Tracker Demo: Machine Setup
 
 A checklist for getting the presenter laptop ready for the live eye-tracking demo
-(slide 36). Do the steps in order; each ends with a check. Allow 30 minutes on a
+(slide 37). Do the steps in order; each ends with a check. Allow 30 minutes on a
 new machine. **Presenter only:** attendees do not need any of this.
 
 The demo shows a Tobii eye tracker streaming gaze into the same recording as the
@@ -130,14 +130,14 @@ From the `mosaic` folder, with `mosaic_tobii` active. You need two terminals.
 5. **Show both streams.** The notebook's Step 7 recorded exactly two: `TobiiEyeTracker`
    (gaze, 60 Hz) and `MOSAIC-State` (one marker per action). Run Step 8 to read the
    file back: it lists each stream with its sample count and time span, on one clock.
-6. **Refresh slide 37:** from this folder, `python tools/make_gaze_figure.py <recording.xdf>`,
+6. **Refresh slide 38:** from this folder, `python tools/make_gaze_figure.py <recording.xdf>`,
    then render the deck.
 
 **Know this before you show the analysis.** Live gaze arrives in pixels of the whole
 screen, but Step 7's gaze areas (game view, information panel, chat) are in pixels of
 the game window, and in the browser the game is a small picture somewhere on the page.
 So the dwell shares and heatmaps of Step 8 will not line up with the live gaze. Use
-the demo to show two streams on one clock, and slide 37 (drawn from the rehearsal
+the demo to show two streams on one clock, and slide 38 (drawn from the rehearsal
 recording) for what an analysis looks like.
 
 ## If something fails
@@ -152,7 +152,7 @@ recording) for what an analysis looks like.
 | Step 7 stops with "No LSL streams found" | The stream was not running when you ran the setup cell. Start `tobii_to_lsl.py` first, then rerun it. |
 | `cannot import name 'DIRECTION_LTR'` | Rerun the last two install lines of step 2. |
 | `No module named 'ipyevents'` | `python -m pip install ipywidgets ipyevents`, then restart Jupyter. |
-| The tracker fails on the day | Go to slide 37, which shows the rehearsal recording. |
+| The tracker fails on the day | Go to slide 38, which shows the rehearsal recording. |
 
 ## What was tested
 

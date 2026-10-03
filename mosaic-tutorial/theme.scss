@@ -2545,6 +2545,34 @@ $loop-gap: 84px;
     color: $primary-color;
     font-weight: 800;
 }
+/* The closing discussion: three tall cards side by side. */
+.watch-list.discuss {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 1.2rem;
+    margin-top: 2.4rem;
+}
+.watch-list.discuss .watch-item {
+    flex: 1 1 0;
+    padding: 1.8rem 1.5rem 2.2rem;
+    border-left: none;
+    border-top: 6px solid $primary-color;
+}
+.reveal .slides section .watch-list.discuss .watch-item p {
+    font-size: 0.98em;
+    line-height: 1.5;
+}
+.watch-list.discuss .watch-num {
+    display: block;
+    margin: 0 0 0.3rem;
+    font-size: 2.2em;
+    line-height: 1;
+}
+.watch-list.discuss .watch-title {
+    display: block;
+    margin-bottom: 0.7rem;
+    font-size: 1.2em;
+}
 /* Small uppercase label above a card's title (the knob cards use it). */
 .change-when {
     display: block;

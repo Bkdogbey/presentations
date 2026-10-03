@@ -3,7 +3,7 @@
     python tools/make_gaze_figure.py path/to/recording.xdf
     python tools/make_gaze_figure.py recording.xdf --screen 2560x1440
 
-The recording is the LabRecorder file from the slide 36 demo (see
+The recording is the LabRecorder file from the slide 37 demo (see
 EYETRACKER_SETUP.md): gaze and game state on one clock. The figure shows where
 the fixations fell on the screen's three areas, and one timeline with the
 victims saved and the area the gaze was in. Writes

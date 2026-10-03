@@ -1,8 +1,8 @@
 # Facilitator Run Sheet — MOSAIC Tutorial (two hours, plus a 15-minute break)
 
-The rendered deck has 44 slides: 39 in the main tutorial (one of them the break
+The rendered deck has 46 slides: 41 in the main tutorial (one of them the break
 slide after Part Three), a closing slide, and 4 appendix slides (the divider and
-three more).
+three more). Slide 41 is the open discussion.
 
 The tutorial is **Closing the Human–AI Loop: Modular Architectures for Autonomous
 Teaming and Physiological Sensing**, a joint session by Oklahoma State University and
@@ -16,7 +16,7 @@ in it. Nobody installs anything; the laptop install is one appendix slide.
 
 The main sequence runs in four parts: why MOSAIC exists, open the notebook,
 experience one mission, then configure it in four parts: **SAR**, **GUI**, **LLM**,
-and **Sensing**. Part Four follows the notebook's cells (its Steps 1 to 8).
+and **Sensing**. Part Four follows the notebook's cells (its Steps 1 to 9).
 
 ## Before the room opens
 
@@ -25,7 +25,7 @@ and **Sensing**. Part Four follows the notebook's cells (its Steps 1 to 8).
 - [ ] Test the deck at the projector's 16:9 resolution (authored at 1280×720).
 - [ ] **The server (the tutorial depends on it).** Sign in as an attendee would and
       run the notebook top to bottom with the **Python (smc)** kernel. In the folder
-      next to the notebook: `config.yaml`, `live_play.py`, `lsl_tools.py`. In the
+      next to the notebook: `config.yaml`, `live_play.py`, `lsl_tools.py`, `leaderboard.py`. In the
       server's base Jupyter environment: `ipywidgets` and `ipyevents` (the picture and
       the key capture need their front-end extensions; reload the page after installing).
 - [ ] **Load test.** Every player renders their own game in their own kernel and the
@@ -37,17 +37,21 @@ and **Sensing**. Part Four follows the notebook's cells (its Steps 1 to 8).
       `E` and `Q` do the same jobs. Click the picture first.
 - [ ] Hub address `https://jupyter.ihuman-lab.work`: every registrant has an account and
       knows their password. Test the QR codes (`tools/make_qr.py` to redraw them).
+- [ ] **The leaderboard (slide 31).** Scores are saved as small files in a folder that every user on the server can write to: `smc/mosaic` inside the shared folder. Set the shared folder in
+      `notebooks/config.yaml` (`leaderboard: dir:`). **Test it with two accounts:** a score saved from one user's notebook must show up in `03_leaderboard.ipynb` run by another. If the folder cannot
+      be written, scores fall back to a `scores` folder next to the notebook, and the board stays empty, so check this before the session. Also in the notebook folder: `leaderboard.py`
+      and `03_leaderboard.ipynb` (the projector notebook).
 - [ ] **No API keys in this session.** Nothing connects to a hosted model. The teammate
       everyone hears from is the stand-in in Step 6, which answers in the style of its
       prompt.
 - [ ] Keep one laptop with the install of `SETUP.md` as a fallback for anyone who
       cannot reach the server.
-- [ ] Eye-tracker demo (slide 36), presenter laptop only: follow
+- [ ] Eye-tracker demo (slide 37), presenter laptop only: follow
       [EYETRACKER_SETUP.md](EYETRACKER_SETUP.md). It runs the notebook on that laptop
       with `eye_tracker: source: live` and `tobii_to_lsl.py`. **This route has not been
       rehearsed end to end:** do it once at the venue, with the projector attached.
       Run `python tools/check_eyetracker.py` first (both eyes seen, 90% valid gaze).
-- [ ] Keep one rehearsal recording (an `.xdf`) on the laptop. Slide 37 (*The
+- [ ] Keep one rehearsal recording (an `.xdf`) on the laptop. Slide 38 (*The
       Synchronized Record*) shows a figure drawn from one, and Step 8 of the notebook
       reads the same kind of file. After the venue rehearsal, redraw the figure from
       that recording and render again: `python tools/make_gaze_figure.py <recording.xdf>`.
@@ -75,12 +79,14 @@ and to running the "Try it" cells in Part Four.
 | 1:02–1:07 | 23–25 | Part Four: the map | The runtime, then the whole task as a few lines. |
 | 1:07–1:19 | 26–28 | 4.1 SAR (building) | Build calls; what a level can contain; everyone writes a decoy placer's worth of settings and plays their own level. |
 | 1:19–1:29 | 29–30 | 4.1 SAR (camera, rewards) | The three cameras; everyone changes a reward. |
-| 1:29–1:33 | 31 | 4.2 GUI | The window and how it reaches the browser. |
-| 1:33–1:51 | 32–34 | 4.3 LLM | The contract; everyone swaps in the stand-in teammate; the two prompt styles. |
-| 1:51–2:09 | 35–37 | 4.4 Sensing | The observation; recording while you play; the live eye tracker; the recording it leaves. |
-| 2:09–2:15 | 38–40 | Wrap-up | Where to go next, the invitation to the lab's paper, then questions; appendix as needed. |
+| 1:29–1:37 | 31 | The challenge | Everyone writes down a guess, plays the same level for two minutes, and the leaderboard goes up on the projector. |
+| 1:37–1:41 | 32 | 4.2 GUI | The window and how it reaches the browser. |
+| 1:41–1:53 | 33–35 | 4.3 LLM | The contract; everyone swaps in the stand-in teammate; the two prompt styles. |
+| 1:53–2:03 | 36–38 | 4.4 Sensing | The observation; recording while you play; the live eye tracker; the recording it leaves. |
+| 2:03–2:05 | 39–40 | Wrap-up | Where to go next, the invitation to the lab's paper. |
+| 2:05–2:15 | 41 | Open discussion | Three open questions, two minutes in pairs first, then the room. Slide 42 (closing) stays up afterwards; appendix as needed. |
 
-The 2:09–2:15 wrap-up is the only slack. If a part runs long, use the cut list below.
+There is no slack: the discussion has ten minutes, and the time for it comes from the LLM and sensing parts. If a part runs long, use the cut list below, and shorten the wrap-up before the discussion.
 
 ## Opening notes (slides 1–3)
 
@@ -180,7 +186,7 @@ Almost no code in this part. Attendees play the baseline mission and learn to re
   game runs; anyone who lost their session reruns the notebook's first cells. Restart on
   time: Part Four has no slack to absorb a long break.
 
-## Part Four notes (slides 23–38): configure MOSAIC
+## Part Four notes (slides 23–39): configure MOSAIC
 
 - Part Four follows the notebook in four parts: 4.1 SAR (the building, its contents,
   the camera, rewards), 4.2 GUI (the window), 4.3 LLM (who answers `Q`), 4.4 Sensing
@@ -189,7 +195,9 @@ Almost no code in this part. Attendees play the baseline mission and learn to re
   Gymnasium/MiniGrid underneath. Slide 25 steps through the whole task as a few lines
   (press forward to move the highlight): SAR, GUI, LLM, then Sensing. It is
   assembled from the notebook's cells; it is a map, not a cell to copy.
-- Each part opens with one slide (26, 31, 32, 35): the notebook code on the left,
+- **Predict, then reveal.** Every "Try it" slide has a question box. Make it real: before anyone presses Shift+Enter, ask for a guess out loud, a show of hands or a note on paper, and only
+  then click to reveal the before/after. A wrong guess is remembered far better than a right answer. Slide 31 makes the guess part of the notebook (`PREDICTION`).
+- Each part opens with one slide (26, 32, 33, 36): the notebook code on the left,
   **three things to change** on the right, each as the setting and what it changes for
   the participant. The highlighted cards are the examples that follow. Keep each to about
   two minutes: name the three, then move on.
@@ -197,7 +205,7 @@ Almost no code in this part. Attendees play the baseline mission and learn to re
   the room, then on the next click the before/after from real MOSAIC. The pill at the
   start of each example's task line says who does it. **Try it** (25 the placer, 27
   rewards, 30 the stand-in teammate, 31 the prompt styles): everyone, live, in the
-  notebook. **Presenter demo** (36 the eye tracker): you, on the projector.
+  notebook. **Presenter demo** (37 the eye tracker): you, on the projector.
 - Slide 27 (*What You Can Customize*) is the gallery from Step 5: five levels, each
   changing one setting. It is drawn by `tools/capture_notebook_figures.py` from the
   notebook's own cells. Counts are per room, so totals grow with the building.
@@ -210,41 +218,46 @@ Almost no code in this part. Attendees play the baseline mission and learn to re
   reset because they have no `reset()` method.
 - Slide 30: `DECOY_COST` in Step 5's build-your-own cell is the knob. The score under the game
   when you press **Stop** includes it.
-- Slide 32 and 33 (the teammate): the stand-in does not read the level; it answers in the
+- **Slide 31 (*The Challenge*)**: Step 9. Everyone plays the **same level** (a fixed seed) for two minutes. The score is the reward (+1 per real victim, −5 per decoy); fewer steps break a tie. The game ends at Stop,
+  at two minutes, or when the episode ends. Before playing everyone sets `PREDICTION`; afterwards they see how far off they were and how a random agent does on the same level (50 tries, no human).
+  Put `03_leaderboard.ipynb` on the projector and run its cell: it refreshes every few seconds, ranks the scores, and lists the best forecasters. Only each person's best score is kept, so they can play again.
+  A random agent hits decoys often, so humans who tell decoys apart beat it easily: ask what they looked at.
+- Slide 33 and 34 (the teammate): the stand-in does not read the level; it answers in the
   style its prompt asks for with a fixed sentence. Say so: what it shows is the whole path.
   A real model replaces it by implementing the same method, `query`.
-- Slide 34 (two prompt styles): both prompts describe the level in the same way and
+- Slide 35 (two prompt styles): both prompts describe the level in the same way and
   differ only in how the teammate should answer, one sentence or a short briefing. Everyone
   switches `PROMPT_TYPE` and presses `Q` again. Ask which style they would rather get under
   time pressure.
-- Slide 35 (sensing) connects the observation (Step 3's live readout) to the recording
+- Slide 36 (sensing) connects the observation (Step 3's live readout) to the recording
   (Step 7). In Step 7 the game calls a function after every action; that writes one
   marker per action to an LSL stream, and a second stream carries the gaze (synthetic in
   the notebook), recorded together to one XDF file.
-- Slide 36 is the live eye-tracking demo, instructor-only, and the route is **not yet
+- Slide 37 is the live eye-tracking demo, instructor-only, and the route is **not yet
   rehearsed** (see [EYETRACKER_SETUP.md](EYETRACKER_SETUP.md)). The notebook runs on the
   presenter laptop with the tracker. Seat the volunteer 60 to 65 cm from the screen, start
   `tobii_to_lsl.py`, run Step 7, press Stop. The point is two streams on one clock; do not
   show Step 8's dwell shares for this recording, because live gaze is in whole-screen
   pixels and the notebook's gaze areas are in game-window pixels. If the device fails, go
-  straight to slide 37.
-- Slide 37 (*The Synchronized Record*) shows the rehearsal recording: the fixations on
+  straight to slide 38.
+- Slide 38 (*The Synchronized Record*) shows the rehearsal recording: the fixations on
   the screen's three areas, and one timeline with the rescues and the area the gaze was in.
   Keep it to a minute. It is drawn by `tools/make_gaze_figure.py` and is also the fallback
   when the tracker fails. Its three rows are questions a researcher asks of such a
   record; the third (gaze after advice) needs a teammate that gives advice during the
   mission, which this recording does not have.
-- Slide 38 (where to go next) is the code map. Point at `notebooks/` as the folder to
+- Slide 39 (where to go next) is the code map. Point at `notebooks/` as the folder to
   copy for your own work.
-- Slide 39 (*MOSAIC in a Study*) invites attendees to the lab's paper, MoA10.3:
+- Slide 40 (*MOSAIC in a Study*) invites attendees to the lab's paper, MoA10.3:
   Monday October 5, 14:00–14:15, Grand C. It is the application of what they
   just configured. The slide says what the study did, not what it found; leave the
   results for the talk. The QR code opens the talk's slides. Check the time and room
   against the final program on the day.
-- Appendix 42–44 hold the laptop install, and two more changes in the same layout: locked
+- Slide 41 (*Open Discussion*) is open on purpose: three questions, not an agenda. Question 3 reaches across to the SHaSTA session (the same loop fits rooms and a swarm), so people who only attend one session can join. Give two minutes in pairs, then take what comes. If it goes quiet, ask who guessed their score best and what changed how they played. Write down the *what is missing* answers.
+- Appendix 44–46 hold the laptop install, and two more changes in the same layout: locked
   rooms and the time limit (at 0:00 the timer stops but the mission keeps going, which is
   expected).
-- The closing slide (40) carries the two universities and the MOSAIC repository link.
+- The closing slide (42) carries the two universities and the MOSAIC repository link.
 
 ## Expected problems
 
@@ -271,13 +284,13 @@ Almost no code in this part. Attendees play the baseline mission and learn to re
 If the session runs long:
 
 1. In Part Three, explain slides 17–18 in one minute each.
-2. Keep the part slides (26, 31, 32, 35) to a minute each.
+2. Keep the part slides (26, 32, 33, 36) to a minute each.
 3. Make the placer slide (28) a presenter walk-through instead of a live try.
-4. Make the prompt-style switch (34) a presenter demo instead of a live try.
-5. Drop the eye-tracker demo (36) if the device is not ready; show slide 37 instead.
+4. Make the prompt-style switch (35) a presenter demo instead of a live try.
+5. Drop the eye-tracker demo (37) if the device is not ready; show slide 38 instead.
 
 Do not cut the checkpoint (14), the play slide (20), the three-cameras clip (29), or
-the stand-in teammate (33): they are the parts every attendee does.
+the stand-in teammate (34): they are the parts every attendee does.
 
 ## Closing ask
 

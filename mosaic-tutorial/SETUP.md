@@ -113,7 +113,7 @@ python -m jupyter notebook 02_mosaic_human_ai.ipynb
 
 If Jupyter asks for a kernel, choose **Python 3 (ipykernel)**. The notebook folder
 holds the files it needs: `02_mosaic_human_ai.ipynb`, `config.yaml`,
-`live_play.py` and `lsl_tools.py`.
+`live_play.py`, `lsl_tools.py` and `leaderboard.py`.
 
 | Symptom | Fix |
 | --- | --- |

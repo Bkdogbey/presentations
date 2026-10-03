@@ -3,6 +3,10 @@ title: "LLM-Mediated Human–AI Interaction in Search and Rescue:<br>[Impact of 
 subtitle: "Human performance, visual attention, and expertise under LLM guidance"
 author: "Elahe Oveisi and Dr. Hemanth Manjunatha"
 institute: "Oklahoma State University"
+description: "How expertise and LLM guidance shape human performance and visual attention in a search-and-rescue task, measured with eye tracking."
+image: assets/participants-new.png
+event_type: "Conference Talk"
+date: "2026-10-05"
 format:
   revealjs:
     theme: [default, theme.scss]
