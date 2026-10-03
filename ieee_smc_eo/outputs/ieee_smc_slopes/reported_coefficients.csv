@@ -1,0 +1,28 @@
+﻿outcome,model_scale,term,beta,ci95_low,ci95_high,q_table,q_exact_prose,source_page
+Victims per step,Victims per step,LLM,0.02,0.008,0.032,<0.01,0.0049,4
+Victims per step,Victims per step,Expertise,0.016,-0.009,0.041,ns,,4
+Victims per step,Victims per step,LLM × Expertise,-0.009,-0.029,0.011,ns,,4
+Total rewards,Reward units,LLM,267.143,90.345,443.941,<0.01,0.0074,4
+Total rewards,Reward units,Expertise,-17.714,-282.673,247.245,ns,,4
+Total rewards,Reward units,LLM × Expertise,181.857,-92.037,455.751,ns,,4
+Saved victims,Log count,LLM,0.035,-0.369,0.439,ns,0.8973,4
+Saved victims,Log count,Expertise,0.221,-0.634,1.076,ns,,4
+Saved victims,Log count,LLM × Expertise,0.435,-0.192,1.062,ns,,4
+Fixation duration,Model units,LLM,-19.326,-31.509,-7.143,<0.01,0.005,5
+Fixation duration,Model units,Expertise,-26.475,-66.839,13.889,ns,,5
+Fixation duration,Model units,LLM × Expertise,17.059,-1.814,35.932,ns,,5
+Pupil-size SD,Model units,LLM,0.122,0.095,0.149,<0.0001,,5
+Pupil-size SD,Model units,Expertise,-0.042,-0.118,0.034,ns,,5
+Pupil-size SD,Model units,LLM × Expertise,-0.051,-0.092,-0.01,<0.05,0.0349,5
+Game-area fixation,Model units,LLM,-0.184,-0.229,-0.139,<0.0001,,5
+Game-area fixation,Model units,Expertise,-0.015,-0.088,0.058,ns,,5
+Game-area fixation,Model units,LLM × Expertise,0.114,0.045,0.183,<0.01,0.004,5
+Chat-area fixation,Model units,LLM,0.092,0.061,0.123,<0.0001,,5
+Chat-area fixation,Model units,Expertise,0.003,-0.04,0.046,ns,,5
+Chat-area fixation,Model units,LLM × Expertise,-0.045,-0.094,0.004,ns,,5
+Fixation count,Log count,LLM,0.248,-0.185,0.681,ns,,5
+Fixation count,Log count,Expertise,-0.201,-0.799,0.397,ns,,5
+Fixation count,Log count,LLM × Expertise,0.815,0.145,1.485,<0.05,,5
+Saccade count,Log count,LLM,0.234,-0.178,0.646,ns,,5
+Saccade count,Log count,Expertise,-0.482,-1.019,0.055,ns,,5
+Saccade count,Log count,LLM × Expertise,0.961,0.324,1.598,<0.01,,5
