@@ -1,0 +1,28 @@
+/*-- scss:rules --*/
+
+/* Deck-local equation and figure layout. The shared iHuman Lab theme is unchanged. */
+.reveal .slides section { text-align: left; }
+.reveal .slides section p { margin: 0.4em 0; }
+.reveal .slides section li { margin: 0.22em 0; line-height: 1.4; }
+.reveal .columns { gap: 1.3em; align-items: flex-start; }
+.reveal .column { min-width: 0; }
+.reveal .math.display { font-size: 0.88em; }
+.reveal .compact-math .math.display { font-size: 0.78em; }
+.reveal .small { font-size: 0.79em; line-height: 1.4; }
+.reveal .small p, .reveal .small li { line-height: 1.4; }
+.reveal .source { font-size: 0.57em; color: rgba(255,255,255,0.57); margin-top: 0.8em; }
+.reveal .source p { color: inherit; line-height: 1.35; }
+.reveal .section-label { font-size: 0.56em; letter-spacing: 0.12em; text-transform: uppercase; color: #EC672C; margin-bottom: 0.6em; }
+.reveal .result-status { border-left: 3px solid #EC672C; padding: 0.4em 0.7em; margin: 0.8em 0; font-size: 0.81em; }
+.reveal .result-status p { margin: 0; }
+.reveal img.diagram { box-shadow: none !important; border-radius: 0 !important; width: 100%; max-height: 410px; object-fit: contain; }
+.reveal img.paper-figure { background: white; width: auto !important; height: auto !important; max-width: 100%; max-height: 320px; object-fit: contain; margin: 0.15em auto; display: block; }
+.reveal .equation-note { font-size: 0.78em; color: rgba(255,255,255,0.73); }
+.reveal .references { font-size: 0.75em; }
+.reveal .references p { margin-bottom: 1.2em; line-height: 1.5; }
+.reveal .compact-table table { font-size: 0.76em; width: 100%; }
+.reveal .compact-table table th, .reveal .compact-table table td { padding: 0.35em 0.5em; }
+.reveal .algorithm li { margin: 0.6em 0; }
+.reveal #title-slide .title { font-size: 2.35em; }
+.reveal #title-slide .author { margin-top: 0.8em; }
+.reveal .footer { max-width: 78%; }
